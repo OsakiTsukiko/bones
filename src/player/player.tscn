@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://1v4ns2ew8hwy" path="res://assets/randy/randy_running_back_1.png" id="6_tdgn1"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2f213"]
+height = 0.8
+radius = 0.2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pq0au"]
 transparency = 1
