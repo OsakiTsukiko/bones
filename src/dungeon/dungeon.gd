@@ -20,13 +20,17 @@ func _init(max_dimensions: Vector2i, room_nr: int, boos_dist: int, seed = null):
 	else:
 		self.random.randomize()
 		
+func get_room_vec(coords: Vector2i):
+	return self.rooms[hash(coords)]
+	
+func get_room_num(x: int, y: int):
+	return self.rooms[hash(Vector2i(x, y))]
+		
 func generate_dungeon():
-	var temp_coords: Vector2i = get_random_point()
-	while self.rooms.has(hash(temp_coords)):
-		temp_coords = get_random_point()
-	add_room(temp_coords)
+	add_room(Vector2i(0, 0)) # Add start room
 	
 	var current_rooms = self.room_nr - 1
+	var temp_coords: Vector2i = Vector2i(0, 0)
 	while current_rooms > 0:
 		var new_room = get_random_neighbour(temp_coords)
 		while self.rooms.has(hash(new_room)):
@@ -35,7 +39,6 @@ func generate_dungeon():
 		
 		current_rooms -= 1
 		temp_coords = new_room
-	
 	#for room in rooms:
 		#Room.print_room_layout(rooms[room])
 		#print()
@@ -50,7 +53,3 @@ func get_random_neighbour(coords: Vector2i):
 		d = Dungeon.directions[self.random.randi() % Dungeon.directions.size()]
 		neighbour = coords + Vector2i(d[0], d[1])
 	return neighbour
-
-func get_random_point():
-	return Vector2i(self.random.randi() % self.max_dimensions[0],
-	 self.random.randi() % self.max_dimensions[1])
