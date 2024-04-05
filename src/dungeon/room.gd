@@ -27,6 +27,14 @@ func add_safe_area():
 	for i in range(Room.SAFE_AREA_SIZE):
 		for j in range(Room.SAFE_AREA_SIZE):
 			self.layout[Room.SAFE_AREA_SIZE + i][ Room.SAFE_AREA_SIZE + j] = true
+			
+func add_safe_area_circle():
+	# Experimental circle safe area
+	var radius = 3
+	for i in range(Room.ROOM_SIZE/2-radius, Room.ROOM_SIZE/2+radius+1):
+		for j in range(Room.ROOM_SIZE/2-radius, Room.ROOM_SIZE/2+radius+1):
+			if (i-Room.ROOM_SIZE/2)*(i-Room.ROOM_SIZE/2) + (j-Room.ROOM_SIZE/2)*(j-Room.ROOM_SIZE/2) <= radius*radius:
+				self.layout[i][j] = true
 
 func do_edge_expansion():
 	for i in range(2, Room.ROOM_SIZE-3):
@@ -38,7 +46,7 @@ func do_edge_expansion():
 						break
 						
 func generate_room():
-	add_safe_area()
+	add_safe_area_circle()
 	for i in range(5):
 		do_edge_expansion()
 	
