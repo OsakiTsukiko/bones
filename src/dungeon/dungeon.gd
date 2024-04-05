@@ -37,7 +37,8 @@ func generate_dungeon():
 		temp_coords = new_room
 	
 	for room in rooms:
-		print(rooms[room].coords)
+		Room.print_room_layout(rooms[room])
+		print()
 
 func add_room(coords: Vector2i):
 		self.rooms[hash(coords)] = Room.new(coords)
