@@ -15,9 +15,14 @@ run/main_scene="res://src/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SoundManager="*res://src/sound_manager/sound_manager.tscn"
+
 [display]
 
 window/stretch/mode="viewport"
+
 [input]
 
 press_w={
