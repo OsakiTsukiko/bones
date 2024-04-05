@@ -1,0 +1,234 @@
+[gd_scene load_steps=34 format=3 uid="uid://ct7rww0ebf14s"]
+
+[ext_resource type="Texture2D" uid="uid://btrc0csfapjdb" path="res://assets/randy/randy.png" id="2_5i6hw"]
+[ext_resource type="Script" path="res://src/player/player.gd" id="2_65niv"]
+[ext_resource type="Texture2D" uid="uid://lux4c2eonle3" path="res://assets/randy/randy_running_1.png" id="2_u730u"]
+[ext_resource type="Texture2D" uid="uid://dvrwcwyeb05el" path="res://assets/randy/randy_running_0.png" id="3_oq00n"]
+[ext_resource type="Texture2D" uid="uid://qarcepxaypgu" path="res://assets/randy/randy_running_back_0.png" id="5_qpg21"]
+[ext_resource type="Texture2D" uid="uid://1v4ns2ew8hwy" path="res://assets/randy/randy_running_back_1.png" id="6_tdgn1"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2f213"]
+height = 0.8
+radius = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pq0au"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("3_oq00n")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_u7fyu"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_pq0au")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eknod"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("2_5i6hw")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_srkao"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_eknod")
+
+[sub_resource type="Animation" id="Animation_6ce7n"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [SubResource("QuadMesh_srkao")]
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_larup"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("2_u730u")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_njmba"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_larup")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2g1d7"]
+load_path = "res://.godot/imported/randy_running_0.png-30361bbe49ee0518097f853b893f771f.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3of03"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("CompressedTexture2D_2g1d7")
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_rs2h6"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_3of03")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7fsqo"]
+load_path = "res://.godot/imported/randy_running_0.png-30361bbe49ee0518097f853b893f771f.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_khwuv"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("CompressedTexture2D_7fsqo")
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_lehgv"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_khwuv")
+size = Vector2(1, 0.8)
+center_offset = Vector3(0, -0.1, 0)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5p7xu"]
+load_path = "res://.godot/imported/randy_running_0.png-30361bbe49ee0518097f853b893f771f.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avade"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("CompressedTexture2D_5p7xu")
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_6vu0k"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_avade")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_50boj"]
+load_path = "res://.godot/imported/randy_running_0.png-30361bbe49ee0518097f853b893f771f.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ocmhd"]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("CompressedTexture2D_50boj")
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_jvq1g"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_ocmhd")
+size = Vector2(1, 0.8)
+center_offset = Vector3(0, -0.1, 0)
+
+[sub_resource type="Animation" id="Animation_bokj0"]
+resource_name = "run"
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [SubResource("QuadMesh_u7fyu"), SubResource("QuadMesh_njmba")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("MeshInstance3D:mesh")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [SubResource("QuadMesh_rs2h6"), SubResource("QuadMesh_lehgv"), SubResource("QuadMesh_6vu0k"), SubResource("QuadMesh_jvq1g")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("MeshInstance3D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.8, 0.8, 0.8), Vector3(1, 1, 1), Vector3(0.8, 0.8, 0.8)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("MeshInstance3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.1, 0), Vector3(0, 0, 0), Vector3(0, -0.1, 0)]
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8fb28"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("5_qpg21")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_4res4"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_8fb28")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x53or"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("6_tdgn1")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_otwsi"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_x53or")
+
+[sub_resource type="Animation" id="Animation_21284"]
+resource_name = "run_back"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [SubResource("QuadMesh_4res4"), SubResource("QuadMesh_otwsi")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ofoc1"]
+_data = {
+"idle": SubResource("Animation_6ce7n"),
+"run": SubResource("Animation_bokj0"),
+"run_back": SubResource("Animation_21284")
+}
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("2_65niv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_2f213")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_u7fyu")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.983322, 0.181875, 0, -0.181875, 0.983322, 0.151396, 1.36753, 3.72062)
+fov = 71.8806
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ofoc1")
+}
+autoplay = "idle"
+speed_scale = 2.0

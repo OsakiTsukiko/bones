@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://depmsdlataooa"
-path.s3tc="res://.godot/imported/dog_0.png-79c9880a4ae73e95fbe05af6cd7e6241.s3tc.ctex"
+uid="uid://dvrwcwyeb05el"
+path.s3tc="res://.godot/imported/randy_running_0.png-30361bbe49ee0518097f853b893f771f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/dog/dog_0.png"
-dest_files=["res://.godot/imported/dog_0.png-79c9880a4ae73e95fbe05af6cd7e6241.s3tc.ctex"]
+source_file="res://assets/randy/randy_running_0.png"
+dest_files=["res://.godot/imported/randy_running_0.png-30361bbe49ee0518097f853b893f771f.s3tc.ctex"]
 
 [params]
 
