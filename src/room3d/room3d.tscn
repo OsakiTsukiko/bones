@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://eqo7ieyrvgf7"]
+
+[ext_resource type="Script" path="res://src/room3d/room3d.gd" id="1_apn0j"]
+
+[node name="Room3D" type="Node3D"]
+script = ExtResource("1_apn0j")
+
+[node name="Blocks" type="Node3D" parent="."]
