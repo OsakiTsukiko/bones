@@ -1,9 +1,7 @@
-extends Camera3D
+extends CharacterBody3D
 
 
 const SPEED = 0.1  # Adjust the speed as needed
-
-var velocity = Vector3()
 
 func _physics_process(delta):
 	# Movement
@@ -23,6 +21,8 @@ func _physics_process(delta):
 	
 	# Normalize direction to ensure consistent speed regardless of direction
 	direction = direction.normalized()
+	velocity = direction * SPEED;
 	
-	global_translate(direction * SPEED);
+	move_and_slide();
 	
+	print(position)
