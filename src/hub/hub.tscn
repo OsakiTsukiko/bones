@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bb7k4c1ue2d1u"]
+[gd_scene load_steps=10 format=3 uid="uid://bb7k4c1ue2d1u"]
 
 [ext_resource type="Script" path="res://src/hub/hub.gd" id="1_utw7n"]
 [ext_resource type="PackedScene" uid="uid://ct7rww0ebf14s" path="res://src/player/player.tscn" id="2_j8168"]
 [ext_resource type="PackedScene" uid="uid://d6kcb8jtf3jb" path="res://src/portal/portal.tscn" id="3_bfgv5"]
+[ext_resource type="PackedScene" uid="uid://dnmgvu1a7s0ns" path="res://src/shop/shop.tscn" id="4_luix4"]
 
 [sub_resource type="Gradient" id="Gradient_l11cq"]
 offsets = PackedFloat32Array(0, 0.322388, 0.716418, 1)
@@ -33,7 +34,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 7)
 environment = SubResource("Environment_7qd02")
 
 [node name="Portal" parent="." instance=ExtResource("3_bfgv5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 3)
+
+[node name="Shop" parent="." instance=ExtResource("4_luix4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 11)
 
 [connection signal="area_shape_entered" from="Portal" to="." method="_on_portal_area_shape_entered"]
 [connection signal="body_entered" from="Portal" to="." method="_on_portal_body_entered"]

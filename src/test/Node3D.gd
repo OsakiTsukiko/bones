@@ -21,6 +21,8 @@ func _ready():
 	dog.init($Player)
 	dog.position = Vector3(8, 1, 8)
 	add_child(dog)
+	
+	$GroundItem._init_instance(0.3)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
