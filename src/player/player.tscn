@@ -10,11 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://qarcepxaypgu" path="res://assets/randy/randy_running_back_0.png" id="5_qpg21"]
 [ext_resource type="Texture2D" uid="uid://1v4ns2ew8hwy" path="res://assets/randy/randy_running_back_1.png" id="6_tdgn1"]
 [ext_resource type="Texture2D" uid="uid://cn3vsd0c8c4ol" path="res://assets/misc/shield.png" id="7_eva1s"]
-[ext_resource type="Texture2D" uid="uid://dct6kn7jq0yga" path="res://assets/ui/heart_empty.png" id="7_yabx7"]
+[ext_resource type="Texture2D" uid="uid://d10g2rta76cn6" path="res://assets/items/hourglass.png" id="7_inkbf"]
 [ext_resource type="FontFile" uid="uid://ix6f0ekut8gh" path="res://assets/fonts/Blackwood Castle.ttf" id="8_2ab2v"]
 [ext_resource type="Texture2D" uid="uid://bpgda7p0abbdy" path="res://assets/misc/sword.png" id="8_igww2"]
 [ext_resource type="Texture2D" uid="uid://brfgitttgy815" path="res://assets/bones/bone_2.png" id="9_84l8x"]
-[ext_resource type="Texture2D" uid="uid://cjbb1xi4ksq8x" path="res://assets/misc/portal.png" id="10_c8kjw"]
+[ext_resource type="Texture2D" uid="uid://c1fxyuvh3kssl" path="res://assets/misc/mony.png" id="10_78r1c"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2f213"]
 height = 0.8
@@ -347,7 +347,7 @@ stretch_mode = 5
 [node name="Time" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2"]
 visible = false
 layout_mode = 2
-texture = ExtResource("7_yabx7")
+texture = ExtResource("7_inkbf")
 expand_mode = 2
 stretch_mode = 5
 
@@ -421,7 +421,7 @@ autowrap_mode = 0
 [node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("10_c8kjw")
+texture = ExtResource("10_78r1c")
 expand_mode = 2
 stretch_mode = 5
 
