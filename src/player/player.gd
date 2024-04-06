@@ -23,6 +23,7 @@ var rotation_speed = 10
 var lives
 var is_sped_up: bool = false
 var is_time_up: bool = false
+var extra_heart: bool = false
 
 enum iih {
 	SWORD,
@@ -32,9 +33,9 @@ enum iih {
 var item_in_hand 
 
 func load_data(player_data: Dictionary):
-	print(player_data)
+	#print(player_data)
+	#print(player_data["iih"])
 	lives = player_data["lives"]
-	print(player_data["iih"])
 	match player_data["iih"]:
 		"sword":
 			item_in_hand = iih.SWORD
@@ -42,26 +43,32 @@ func load_data(player_data: Dictionary):
 			item_in_hand = iih.SHIELD
 	player_money = player_data["player_money"]
 	
-	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Boots.visible = false
-	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = false
-	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Time.visible = false
+	
 	for item in player_data["items"]:
 		match item:
 			"heart":
-				print("LIVES USED")
-				lives = min(3, lives + 1) 
-				$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = true
+				extra_heart = true
 			"time":
 				is_time_up = true
-				$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Time.visible = true
 			"speed":
 				is_sped_up = true
 				SPED_UP_MODIFIER = 1.5
-				$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Boots.visible = true
+	
+	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Boots.visible = false
+	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = false
+	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Time.visible = false
+	
+	if SceneManager.player_data["items"].has("speed"):
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Boots.visible = true
+	if SceneManager.player_data["items"].has("heart"):
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = true
+	if SceneManager.player_data["items"].has("time"):
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Time.visible = true
 
 func _ready() -> void:
 	load_data(SceneManager.player_data)
 	target_rotation = rotation.y
+	
 	if (lives == 1):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_empty
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_empty
@@ -87,6 +94,11 @@ func take_damage(value: int):
 	if (item_in_hand == iih.SHIELD && Input.is_action_pressed("attack")):
 		return
 	print(lives)
+	if extra_heart:
+		extra_heart = false
+		SceneManager.player_data["items"].erase("heart")
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = false
+		return
 	lives -= 1
 	if (lives == 0):
 		# GAME OVER 
