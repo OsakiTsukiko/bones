@@ -6,6 +6,7 @@ var room_block_scene: PackedScene = load("res://src/room3d/room_block.tscn")
 var room_barrier_scene: PackedScene = load("res://src/room3d/room_barrier.tscn")
 var room_bridge_scene: PackedScene = load("res://src/room3d/room_bridge.tscn")
 var room_unstable_scene: PackedScene = load("res://src/room3d/room_unstable.tscn")
+var room_door: PackedScene = load("res://src/room3d/room_door.tscn")
 
 var ground_object_scene: PackedScene = load("res://src/ground_object/ground_object.tscn")
 
@@ -178,22 +179,42 @@ func next_level(idk, ground_object: Area3D):
 		#block.visible = true
 	if (room.doors.has("N")):
 		for block: Node3D in n_bruv_blocks:
-			add_tile(block.position.x, block.position.z, room_bridge_scene)
+			if (block.position.x == 0):
+				var node = add_tile(block.position.x, block.position.z, room_door)
+				node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("N"))
+				print("N")
+			else: 	
+				add_tile(block.position.x, block.position.z, room_bridge_scene)
 			block.queue_free()
 	
 	if (room.doors.has("S")):
 		for block: Node3D in s_bruv_blocks:
-			add_tile(block.position.x, block.position.z, room_bridge_scene)
+			if (block.position.x == Room.ROOM_SIZE - 1):
+				var node = add_tile(block.position.x, block.position.z, room_door)
+				node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("S"))
+				print("S")
+			else:
+				add_tile(block.position.x, block.position.z, room_bridge_scene)
 			block.queue_free()
 	
 	if (room.doors.has("W")):
 		for block: Node3D in w_bruv_blocks:
-			add_tile(block.position.x, block.position.z, room_bridge_scene)
+			if (block.position.z == 0):
+				var node = add_tile(block.position.x, block.position.z, room_door)
+				node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("W"))
+				print("W")
+			else: 
+				add_tile(block.position.x, block.position.z, room_bridge_scene)
 			block.queue_free()
 			
 	if (room.doors.has("E")):
 		for block: Node3D in e_bruv_blocks:
-			add_tile(block.position.x, block.position.z, room_bridge_scene)
+			if (block.position.z == Room.ROOM_SIZE - 1):
+				var node = add_tile(block.position.x, block.position.z, room_door)
+				node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("E"))
+				print("E")
+			else: 
+				add_tile(block.position.x, block.position.z, room_bridge_scene)
 			block.queue_free()
 		
 
@@ -203,3 +224,6 @@ func add_tile(x: int, z: int, tile: PackedScene) -> Node3D:
 	t.position.z = z
 	add_child(t)
 	return t
+
+func do_door(idk, d: String):
+	print(d)
