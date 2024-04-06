@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ct7rww0ebf14s"]
+[gd_scene load_steps=37 format=3 uid="uid://ct7rww0ebf14s"]
 
 [ext_resource type="Texture2D" uid="uid://btrc0csfapjdb" path="res://assets/randy/randy.png" id="2_5i6hw"]
 [ext_resource type="Script" path="res://src/player/player.gd" id="2_65niv"]
@@ -10,17 +10,6 @@
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2f213"]
 height = 0.8
 radius = 0.2
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pq0au"]
-transparency = 1
-shading_mode = 0
-albedo_texture = ExtResource("3_oq00n")
-billboard_mode = 1
-billboard_keep_scale = true
-
-[sub_resource type="QuadMesh" id="QuadMesh_u7fyu"]
-lightmap_size_hint = Vector2i(7, 7)
-material = SubResource("StandardMaterial3D_pq0au")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eknod"]
 transparency = 1
@@ -47,6 +36,17 @@ tracks/0/keys = {
 "update": 0,
 "values": [SubResource("QuadMesh_srkao")]
 }
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pq0au"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("3_oq00n")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_u7fyu"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_pq0au")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_larup"]
 transparency = 1
@@ -213,18 +213,57 @@ _data = {
 "run_back": SubResource("Animation_21284")
 }
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_o8oou"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5i6hw")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_oq00n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_u730u")
+}],
+"loop": true,
+"name": &"run",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_qpg21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_tdgn1")
+}],
+"loop": true,
+"name": &"run_backwards",
+"speed": 6.0
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dnwfn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mn6fg"]
+
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 8
+collision_mask = 8
 script = ExtResource("2_65niv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_2f213")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("QuadMesh_u7fyu")
+visible = false
+mesh = SubResource("QuadMesh_srkao")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.983322, 0.181875, 0, -0.181875, 0.983322, 0.151396, 1.36753, 3.72062)
-fov = 71.8806
+transform = Transform3D(1, 0, 0, 0, 0.948374, 0.317156, 0, -0.317156, 0.948374, 0.151396, 2.00295, 4.81901)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -232,3 +271,31 @@ libraries = {
 }
 autoplay = "idle"
 speed_scale = 2.0
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+billboard = 1
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_o8oou")
+animation = &"run_backwards"
+autoplay = "idle"
+frame_progress = 0.642727
+
+[node name="LEFT" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="LEFT" type="CollisionShape3D" parent="LEFT"]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, -25, 25, 0)
+shape = SubResource("BoxShape3D_dnwfn")
+
+[node name="RIGHT" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="RIGHT" type="CollisionShape3D" parent="RIGHT"]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 25, 25, 0)
+shape = SubResource("BoxShape3D_mn6fg")
+
+[connection signal="body_entered" from="LEFT" to="." method="_on_left_body_entered"]
+[connection signal="body_entered" from="RIGHT" to="." method="_on_right_body_entered"]

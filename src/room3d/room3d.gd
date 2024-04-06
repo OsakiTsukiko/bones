@@ -3,8 +3,7 @@ class_name Room3D
 
 var room: Room
 var room_block_scene: PackedScene = load("res://src/room3d/room_block.tscn")
-
-var block_array: Array[Node] = []
+var room_barrier_scene: PackedScene = load("res://src/room3d/room_barrier.tscn")
 
 func _init(p_room: Room) -> void:
 	room = p_room
@@ -14,6 +13,9 @@ func _init(p_room: Room) -> void:
 				var b = room_block_scene.instantiate()
 				b.position.x = i
 				b.position.z = j
-				block_array.append(b)
-				print(b)
 				add_child(b)
+			else:
+				var brr = room_barrier_scene.instantiate()
+				brr.position.x = i
+				brr.position.z = j
+				add_child(brr)

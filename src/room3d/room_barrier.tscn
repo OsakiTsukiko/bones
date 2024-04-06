@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce46vs2t7vgyr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bg52h"]
+
+[node name="RoomBarrier" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_bg52h")
