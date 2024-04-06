@@ -65,3 +65,13 @@ func _on_right_body_entered(body: Node3D) -> void:
 func _on_left_body_entered(body: Node3D) -> void:
 	if (body.has_method("flip")):
 		body.flip(false)
+
+
+func _on_attack_body_entered(body: Node3D) -> void:
+	if (body.has_method("attack")):
+		body.attack()
+
+
+func _on_attack_body_exited(body: Node3D) -> void:
+	if (body.has_method("stop_attack")):
+		body.stop_attack()
