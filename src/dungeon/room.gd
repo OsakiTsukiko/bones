@@ -6,7 +6,7 @@ static var SAFE_AREA_SIZE = 5
 static var directions = [[0, 1], [1, 0], [0, -1], [-1, 0]]
 
 var coords: Vector2i
-var neighbours: int
+var is_boss: bool
 var layout: Array[Array]
 var doors: Dictionary
 
@@ -17,9 +17,10 @@ enum Tiles {
 	UNSTABLE
 }
 
-func _init(coords: Vector2i):
+func _init(coords: Vector2i, is_boss: bool):
 	self.random = RandomNumberGenerator.new()
 	self.coords = coords
+	self.is_boss = is_boss
 	
 	init_layout()
 	generate_room()
@@ -38,6 +39,8 @@ func add_safe_area():
 func add_safe_area_circle():
 	# Experimental circle safe area
 	var radius = 5
+	if is_boss:
+		radius = 2
 	for i in range(Room.ROOM_SIZE/2-radius, Room.ROOM_SIZE/2+radius+1):
 		for j in range(Room.ROOM_SIZE/2-radius, Room.ROOM_SIZE/2+radius+1):
 			if (i-Room.ROOM_SIZE/2)*(i-Room.ROOM_SIZE/2) + (j-Room.ROOM_SIZE/2)*(j-Room.ROOM_SIZE/2) <= radius*radius:
@@ -54,8 +57,9 @@ func do_edge_expansion():
 						
 func generate_room():
 	add_safe_area_circle()
-	for i in range(7):
-		do_edge_expansion()
+	if !is_boss:
+		for i in range(7):
+			do_edge_expansion()
 
 func add_neighbour(direction, offset):
 	match direction:
@@ -97,6 +101,34 @@ func add_unstable():
 						valid = false
 				if valid and self.random.randf() < 0.4:
 					self.layout[i][j] = Tiles.UNSTABLE
+
+func get_neighbours():
+	var neighbours: Array[Vector2i]
+	for d in doors:
+		match d:
+			'N':
+				neighbours.append(coords + Vector2i(-1, 0))
+			'S':
+				neighbours.append(coords + Vector2i(1, 0))
+			'E':
+				neighbours.append(coords + Vector2i(0, 1))
+			'W':
+				neighbours.append(coords + Vector2i(0, -1))
+	return neighbours
+
+func get_neighbours_hashed():
+	var neighbours: Array[String]
+	for d in doors:
+		match d:
+			'N':
+				neighbours.append(hash(coords + Vector2i(-1, 0)))
+			'S':
+				neighbours.append(hash(coords + Vector2i(1, 0)))
+			'E':
+				neighbours.append(hash(coords + Vector2i(0, 1)))
+			'W':
+				neighbours.append(hash(coords + Vector2i(0, -1)))
+	return neighbours
 
 func _to_string():
 	return "(%s, %s)" % [self.coords.x, self.coords.y]

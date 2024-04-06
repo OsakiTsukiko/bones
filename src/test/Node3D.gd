@@ -6,7 +6,7 @@ var dog_scene: PackedScene = load("res://src/dog_enemy/dog_enemy.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var dgn = Dungeon.new(Vector2i(15, 15), 5, 5, hash("gimme negative plss"))
+	var dgn = Dungeon.new(Vector2i(15, 15), 15)
 	dgn.generate_dungeon()
 	
 	var r: Room;

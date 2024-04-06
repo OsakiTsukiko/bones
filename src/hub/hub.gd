@@ -1,6 +1,6 @@
 extends Node3D
 
-
+# Called when the node enters the scene tree for the first time.
 var test_scene: PackedScene = load("res://src/test/test.tscn")
 var player_scene: PackedScene = load("res://src/player/player.tscn")
 var player: Node3D = null
@@ -10,9 +10,7 @@ func load_data(data: Dictionary):
 	player.load_data(SceneManager.get_player_data())
 
 func setup_room():
-	var room: Room = Room.new(Vector2i(0, 0));
 	var room_3d: Room3D = Room3D.new(room)
-
 	add_child(room_3d);
 
 # Called when the node enters the scene tree for the first time.
