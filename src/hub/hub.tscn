@@ -106,4 +106,7 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 billboard = 1
 texture = ExtResource("4_ql8hu")
 
+[connection signal="body_entered" from="Shop/Object1" to="." method="_on_item_body_entered" binds= ["heart"]]
+[connection signal="body_entered" from="Shop/Object2" to="." method="_on_item_body_entered" binds= ["speed"]]
+[connection signal="body_entered" from="Shop/Object3" to="." method="_on_item_body_entered" binds= ["time"]]
 [connection signal="body_entered" from="Portal" to="." method="_on_portal_body_entered"]
