@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-RandStuff="*res://src/rand_stuff.gd"
 SoundManager="*res://src/sound_manager/sound_manager.tscn"
+RandStuff="*res://src/rand_stuff.gd"
 
 [display]
 

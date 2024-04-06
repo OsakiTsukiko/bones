@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://d6kcb8jtf3jb"]
+
+[ext_resource type="Texture2D" uid="uid://cqo533kjgy1v1" path="res://icon.svg" id="1_bjmkg"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6fbe0"]
+radius = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qyaj0"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("1_bjmkg")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_n7e8l"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_qyaj0")
+
+[node name="Portal" type="Area3D"]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_6fbe0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_n7e8l")
