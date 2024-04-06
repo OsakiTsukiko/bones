@@ -1,5 +1,8 @@
 extends Node3D
 
+var dog_scene: PackedScene = load("res://src/dog_enemy/dog_enemy.tscn")
+
+@onready var blks = $blks
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,7 +15,12 @@ func _ready():
 		break
 	 
 	var idk = Room3D.new(r)
-	add_child(idk)
+	blks.add_child(idk)
+	
+	var dog = dog_scene.instantiate()
+	dog.init($Player)
+	dog.position = Vector3(8, 1, 8)
+	add_child(dog)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

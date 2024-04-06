@@ -1,11 +1,26 @@
 extends CharacterBody3D
 
-@onready var anim_player = $AnimationPlayer
+# @onready var anim_player = $AnimationPlayer
+@onready var anim_sprite = $AnimatedSprite3D
 
-const SPEED = 0.1  # Adjust the speed as needed
+const SPEED = 200  # Adjust the speed as needed
+
+var target_rotation;
+var rotation_speed = 10;
+
+func _ready() -> void:
+	target_rotation = rotation.y
 
 func _physics_process(delta):
-	# Movement
+	
+	rotation.y = lerp_angle(rotation.y, target_rotation, rotation_speed * delta)
+	
+	if Input.is_action_just_pressed("rot_l"):
+		target_rotation -= PI/4
+	
+	if Input.is_action_just_pressed("rot_r"):
+		target_rotation += PI/4
+	
 	var direction = Vector3()
 	if Input.is_action_pressed("press_w"):
 		direction += Vector3.FORWARD;
@@ -21,22 +36,32 @@ func _physics_process(delta):
 		#direction += Vector3.UP;
 		
 	if Input.is_action_pressed("press_w"):
-		anim_player.current_animation = "run_back" 
+		# anim_player.current_animation = "run_back" 
+		anim_sprite.animation = "run_backwards"
 	
 	if Input.is_action_pressed("press_s"):
-		anim_player.current_animation = "run" 
+		# anim_player.current_animation = "run" 
+		anim_sprite.animation = "run"
 	if Input.is_action_pressed("press_d") and !Input.is_action_pressed("press_w"):
-		anim_player.current_animation = "run" 
+		anim_sprite.animation = "run"
 	if Input.is_action_pressed("press_a") and !Input.is_action_pressed("press_w"):
-		anim_player.current_animation = "run" 
+		anim_sprite.animation = "run"
 	
 	if direction == Vector3.ZERO:
-		anim_player.current_animation = "idle" 
+		anim_sprite.animation = "idle"
 	
 	# Normalize direction to ensure consistent speed regardless of direction
 	direction = direction.normalized()
-	velocity = direction * SPEED;
+	velocity = transform.basis * direction * delta * SPEED;
 	
 	move_and_slide();
-	
-	print(position)
+
+
+func _on_right_body_entered(body: Node3D) -> void:
+	if (body.has_method("flip")):
+		body.flip(true)
+
+
+func _on_left_body_entered(body: Node3D) -> void:
+	if (body.has_method("flip")):
+		body.flip(false)

@@ -1,23 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://ckw8qfg5x0v2w"]
+[gd_scene load_steps=9 format=3 uid="uid://ckw8qfg5x0v2w"]
 
-[ext_resource type="Texture2D" uid="uid://chfiliru0wauv" path="res://assets/floor/floor_v1.png" id="1_0uj4p"]
-[ext_resource type="Texture2D" uid="uid://bl5kk44ugqp63" path="res://assets/floor/floor_side_v1.png" id="2_jfw82"]
+[ext_resource type="Script" path="res://src/room3d/room_block.gd" id="1_uowql"]
+[ext_resource type="Texture2D" uid="uid://cqo533kjgy1v1" path="res://icon.svg" id="2_f4ggk"]
+[ext_resource type="Texture2D" uid="uid://c270mdpgcivdv" path="res://assets/floor/floor_side_v2.png" id="2_l7ubo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3o1kv"]
 shading_mode = 0
-albedo_texture = ExtResource("1_0uj4p")
+albedo_texture = ExtResource("2_f4ggk")
+texture_filter = 0
+texture_repeat = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_a2lys"]
 material = SubResource("StandardMaterial3D_3o1kv")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mpod8"]
 shading_mode = 0
-albedo_texture = ExtResource("2_jfw82")
+albedo_texture = ExtResource("2_l7ubo")
+texture_filter = 0
+texture_repeat = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_lyxwr"]
 material = SubResource("StandardMaterial3D_mpod8")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_26w07"]
+
 [node name="RoomBlock" type="Node3D"]
+script = ExtResource("1_uowql")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0)
@@ -40,3 +48,10 @@ skeleton = NodePath("../MeshInstance3D2")
 [node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.5)
 mesh = SubResource("QuadMesh_lyxwr")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_26w07")
