@@ -18,6 +18,7 @@ var life = 3
 var id: int
 
 func take_damage():
+	$AnimationPlayer.play("hit")
 	life -= 1
 	if (life == 0):
 		dog_death.emit()

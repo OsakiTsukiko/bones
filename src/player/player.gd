@@ -107,8 +107,11 @@ func take_damage(value: int):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = false
 		return
 	lives -= 1
+	
+	$Camera3D.camera_shake()
 	if (lives == 0):
-		# GAME OVER 
+		if Input.get_connected_joypads().size():
+			Input.start_joy_vibration(Input.get_connected_joypads()[0], 0.5, 0.5, 0.5)
 		pass 
 	if (lives == 1):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_empty
@@ -150,10 +153,17 @@ func _physics_process(delta):
 			attack_timer.start()
 			shield.visible = false 
 			SPEED = 120
+			
+			var hit = false
 			for node in atk_area.get_overlapping_bodies():
 				print(node)
 				if node.has_method("take_damage"):
+					hit = true
+					if Input.get_connected_joypads().size():
+						Input.start_joy_vibration(Input.get_connected_joypads()[0], 0.25, 0.5, 0.25)
 					node.take_damage()
+			if !hit and Input.get_connected_joypads().size():
+				Input.start_joy_vibration(Input.get_connected_joypads()[0], 0.25, 0.25, 0.25)
 					
 	if !(attack_timer.is_stopped()):
 		attack_bar.value = 100*(1-attack_timer.time_left)
