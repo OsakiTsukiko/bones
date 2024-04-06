@@ -18,6 +18,7 @@ var heart_empty = load("res://assets/ui/heart_empty.png")
 var SPEED = 120  # Adjust the speed as needed
 var SPED_UP_MODIFIER: float = 1
 var player_money = 0
+var player_fossils = 0
 
 var target_rotation;
 var rotation_speed = 10
@@ -44,7 +45,7 @@ func load_data(player_data: Dictionary):
 		"shield":
 			item_in_hand = iih.SHIELD
 	player_money = player_data["player_money"]
-	
+	player_fossils = player_data["player_fossils"]
 	
 	for item in player_data["items"]:
 		match item:
@@ -66,6 +67,9 @@ func load_data(player_data: Dictionary):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = true
 	if SceneManager.player_data["items"].has("time"):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Time.visible = true
+		
+	$Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer/RichTextLabel.text = str(player_fossils)
+	$Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer2/RichTextLabel.text = str(player_money)
 
 func _ready() -> void:
 	load_data(SceneManager.player_data)

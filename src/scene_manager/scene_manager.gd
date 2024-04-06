@@ -16,7 +16,9 @@ var player_data: Dictionary = {
 	"iih": "sword",
 	"items": [],
 	"lives": 3,
-	"player_money": 0
+	"player_money": 10,
+	"player_fossils": 100,
+	"donated_fossils": 0
 }
 
 var dungeon := Dungeon.new(Vector2i(0, 0), 15)

@@ -12,7 +12,6 @@ func _init_instance(collision_radius: float, object_texture: Texture2D = null, s
 func _ready():
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
