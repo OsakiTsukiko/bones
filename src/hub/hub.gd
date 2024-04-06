@@ -27,9 +27,22 @@ func _process(delta):
 	pass
 
 func _on_portal_body_entered(body):
-	print(1, body)
 	if body == $Player:
 		call_deferred("ed_wrapper")
 
+
 func ed_wrapper():
 	SceneManager.enter_dungeon()
+
+func _on_item_body_entered(body, item: String):
+	if body.has_method("is_player"):
+		if !SceneManager.player_data["items"].has(item):
+			SceneManager.player_data["items"].append(item)
+			$Player.load_data(SceneManager.player_data)
+
+func _change_scene_to(scene: PackedScene):
+	get_tree().change_scene_to_packed(scene)
+
+
+func _on_item_bodys_entered(body_rid, body, body_shape_index, local_shape_index, extra_arg_0):
+	pass # Replace with function body.

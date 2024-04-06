@@ -6,9 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://cqr4nwnprgxuf" path="res://assets/ui/item_frame.png" id="3_2nfe0"]
 [ext_resource type="Texture2D" uid="uid://cssvcad5prlkl" path="res://assets/ui/heart_filled.png" id="3_fgxpd"]
 [ext_resource type="Texture2D" uid="uid://dvrwcwyeb05el" path="res://assets/randy/randy_running_0.png" id="3_oq00n"]
+[ext_resource type="Texture2D" uid="uid://14x1bub882bj" path="res://assets/items/boots.png" id="5_eg7nj"]
 [ext_resource type="Texture2D" uid="uid://qarcepxaypgu" path="res://assets/randy/randy_running_back_0.png" id="5_qpg21"]
 [ext_resource type="Texture2D" uid="uid://1v4ns2ew8hwy" path="res://assets/randy/randy_running_back_1.png" id="6_tdgn1"]
 [ext_resource type="Texture2D" uid="uid://cn3vsd0c8c4ol" path="res://assets/misc/shield.png" id="7_eva1s"]
+[ext_resource type="Texture2D" uid="uid://dct6kn7jq0yga" path="res://assets/ui/heart_empty.png" id="7_yabx7"]
 [ext_resource type="Texture2D" uid="uid://bpgda7p0abbdy" path="res://assets/misc/sword.png" id="8_igww2"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2f213"]
@@ -321,6 +323,31 @@ theme_override_constants/margin_bottom = 20
 [node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HAND/MarginContainer"]
 layout_mode = 2
 texture = ExtResource("8_igww2")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Boots" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+texture = ExtResource("5_eg7nj")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Heart" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_fgxpd")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Time" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+texture = ExtResource("7_yabx7")
 expand_mode = 2
 stretch_mode = 5
 

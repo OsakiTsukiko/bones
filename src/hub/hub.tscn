@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bb7k4c1ue2d1u"]
+[gd_scene load_steps=15 format=3 uid="uid://bb7k4c1ue2d1u"]
 
 [ext_resource type="Script" path="res://src/hub/hub.gd" id="1_utw7n"]
 [ext_resource type="Script" path="res://src/shop/shop.gd" id="2_lgfrx"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cjsq5dy6icxaf" path="res://assets/bones/bone_1.png" id="4_hs6pd"]
 [ext_resource type="Texture2D" uid="uid://cjbb1xi4ksq8x" path="res://assets/misc/portal.png" id="4_ql8hu"]
 [ext_resource type="Texture2D" uid="uid://cssvcad5prlkl" path="res://assets/ui/heart_filled.png" id="5_mxuru"]
+[ext_resource type="Texture2D" uid="uid://14x1bub882bj" path="res://assets/items/boots.png" id="6_4hsov"]
+[ext_resource type="Texture2D" uid="uid://dct6kn7jq0yga" path="res://assets/ui/heart_empty.png" id="7_see5k"]
 
 [sub_resource type="Gradient" id="Gradient_l11cq"]
 offsets = PackedFloat32Array(0, 0.322388, 0.716418, 1)
@@ -47,7 +49,7 @@ script = ExtResource("3_48y66")
 shape = SubResource("CylinderShape3D_yw335")
 
 [node name="Sprite3D" type="Sprite3D" parent="Shop/ShopKeeper"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.5, 0)
 billboard = 1
 texture = ExtResource("4_hs6pd")
 
@@ -77,7 +79,7 @@ shape = SubResource("CylinderShape3D_yw335")
 [node name="Sprite3D" type="Sprite3D" parent="Shop/Object2"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 billboard = 1
-texture = ExtResource("5_mxuru")
+texture = ExtResource("6_4hsov")
 
 [node name="Object3" type="Area3D" parent="Shop"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
@@ -91,7 +93,7 @@ shape = SubResource("CylinderShape3D_yw335")
 [node name="Sprite3D" type="Sprite3D" parent="Shop/Object3"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 billboard = 1
-texture = ExtResource("5_mxuru")
+texture = ExtResource("7_see5k")
 
 [node name="Portal" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.5, 8)
@@ -106,4 +108,7 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 billboard = 1
 texture = ExtResource("4_ql8hu")
 
+[connection signal="body_entered" from="Shop/Object1" to="." method="_on_item_body_entered" binds= ["heart"]]
+[connection signal="body_entered" from="Shop/Object2" to="." method="_on_item_body_entered" binds= ["speed"]]
+[connection signal="body_entered" from="Shop/Object3" to="." method="_on_item_body_entered" binds= ["time"]]
 [connection signal="body_entered" from="Portal" to="." method="_on_portal_body_entered"]
