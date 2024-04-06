@@ -1,10 +1,10 @@
 extends Panel
 
-
+@onready var hub_scene: PackedScene = preload("res://src/hub/hub.tscn")
 
 func _on_button_start_pressed():
 	SoundManager.play_sound("interface");
-	pass # Replace with function body.
+	get_tree().change_scene_to_packed(hub_scene)
 
 
 func _on_button_toggle_sound_pressed():

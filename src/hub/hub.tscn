@@ -1,0 +1,40 @@
+[gd_scene load_steps=9 format=3 uid="uid://bb7k4c1ue2d1u"]
+
+[ext_resource type="Script" path="res://src/hub/hub.gd" id="1_utw7n"]
+[ext_resource type="PackedScene" uid="uid://ct7rww0ebf14s" path="res://src/player/player.tscn" id="2_j8168"]
+[ext_resource type="PackedScene" uid="uid://d6kcb8jtf3jb" path="res://src/portal/portal.tscn" id="3_bfgv5"]
+
+[sub_resource type="Gradient" id="Gradient_l11cq"]
+offsets = PackedFloat32Array(0, 0.322388, 0.716418, 1)
+colors = PackedColorArray(0.158457, 0.106393, 0.0616231, 1, 0.489638, 0.360847, 0.22262, 1, 0.538994, 0.444549, 0.387851, 1, 0.812681, 0.657664, 0.528578, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cdio3"]
+gradient = SubResource("Gradient_l11cq")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_3sa0a"]
+panorama = SubResource("GradientTexture2D_cdio3")
+
+[sub_resource type="Sky" id="Sky_r6dqr"]
+sky_material = SubResource("PanoramaSkyMaterial_3sa0a")
+
+[sub_resource type="Environment" id="Environment_7qd02"]
+background_mode = 2
+sky = SubResource("Sky_r6dqr")
+
+[node name="Hub" type="Node3D"]
+script = ExtResource("1_utw7n")
+
+[node name="Player" parent="." instance=ExtResource("2_j8168")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 7)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7qd02")
+
+[node name="Portal" parent="." instance=ExtResource("3_bfgv5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+
+[connection signal="area_shape_entered" from="Portal" to="." method="_on_portal_area_shape_entered"]
+[connection signal="body_entered" from="Portal" to="." method="_on_portal_body_entered"]
+[connection signal="body_shape_entered" from="Portal" to="." method="_on_portal_body_shape_entered"]
