@@ -3,11 +3,12 @@ extends CharacterBody3D
 # @onready var anim_player = $AnimationPlayer
 @onready var anim_sprite = $AnimatedSprite3D
 
-const SPEED = 100  # Adjust the speed as needed
+const SPEED = 200  # Adjust the speed as needed
 
 var player: Node3D
 
 var is_attacking: bool
+var stop_attackv: bool
 
 func init(p_player: Node3D) -> void:
 	player = p_player
@@ -31,19 +32,29 @@ func _physics_process(delta):
 
 func flip(val: bool):
 	anim_sprite.flip_h = val
+	if (val):
+		anim_sprite.offset.x = -1080
+	else:
+		anim_sprite.offset.x = -540
 
 func attack():
 	is_attacking = true
+	stop_attackv = false
 	do_attack()
 
 func stop_attack():
-	is_attacking = false
+	stop_attackv = true
 
 func do_attack():
 	anim_sprite.animation = "attack"
 	$AnimAttackTimer.start()
 
 func _on_anim_attack_timer_timeout() -> void:
-	print("TODO: DEAL DAMAGE")
+	for body in $ATTACK.get_overlapping_bodies():
+		if (body.has_method("take_damage")):
+			body.take_damage(50)
+	if (stop_attackv):
+		is_attacking = false
 	if (is_attacking):
 		do_attack()
+		

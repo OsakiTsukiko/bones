@@ -254,7 +254,7 @@ size = Vector3(0.995117, 1, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_de1n7"]
 height = 1.29849
-radius = 0.0740801
+radius = 0.207748
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 8
