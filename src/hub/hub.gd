@@ -34,6 +34,7 @@ func _on_item_body_entered(body, item: String):
 	if body.has_method("is_player"):
 		if !SceneManager.player_data["items"].has(item):
 			SceneManager.player_data["items"].append(item)
+			$Player.load_data(SceneManager.player_data)
 
 func _change_scene_to(scene: PackedScene):
 	get_tree().change_scene_to_packed(scene)

@@ -41,16 +41,23 @@ func load_data(player_data: Dictionary):
 		"shield":
 			item_in_hand = iih.SHIELD
 	player_money = player_data["player_money"]
+	
+	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Boots.visible = false
+	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = false
+	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Time.visible = false
 	for item in player_data["items"]:
 		match item:
-			"life":
+			"heart":
 				print("LIVES USED")
 				lives = min(3, lives + 1) 
+				$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = true
 			"time":
 				is_time_up = true
+				$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Time.visible = true
 			"speed":
 				is_sped_up = true
 				SPED_UP_MODIFIER = 1.5
+				$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Boots.visible = true
 
 func _ready() -> void:
 	load_data(SceneManager.player_data)
