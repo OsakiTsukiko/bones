@@ -55,6 +55,7 @@ _data = {
 }
 
 [node name="TransitionScreen" type="CanvasLayer"]
+visible = false
 script = ExtResource("1_ve2u4")
 
 [node name="ColorRect" type="ColorRect" parent="."]
