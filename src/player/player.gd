@@ -7,6 +7,7 @@ extends CharacterBody3D
 @onready var sword = $Sword
 
 @onready var attack_timer = $AttackTimer
+@onready var attack_bar = $Camera3D/CanvasLayer/Cooldown/Container/Bar
 
 @onready var atk_area = $LaAttack
 
@@ -143,6 +144,8 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("attack") && item_in_hand == iih.SWORD:
 		if (attack_timer.is_stopped()):
+			attack_bar.visible = true
+			attack_bar.value = 0
 			print("ATTACK")
 			attack_timer.start()
 			shield.visible = false 
@@ -151,8 +154,12 @@ func _physics_process(delta):
 				print(node)
 				if node.has_method("take_damage"):
 					node.take_damage()
+					
+	if !(attack_timer.is_stopped()):
+		attack_bar.value = 100*(1-attack_timer.time_left)
+	else:
+		attack_bar.visible = false
 		
-	
 	rotation.y = lerp_angle(rotation.y, target_rotation, rotation_speed * delta)
 	
 	if Input.is_action_just_pressed("rot_l"):
