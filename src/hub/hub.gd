@@ -16,4 +16,7 @@ func _process(delta):
 
 func _on_portal_body_entered(body):
 	if body == $Player:
-		get_tree().change_scene_to_packed(test_scene)
+		call_deferred("_change_scene_to", test_scene)
+
+func _change_scene_to(scene: PackedScene):
+	get_tree().change_scene_to_packed(scene)
