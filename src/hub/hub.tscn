@@ -1,7 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://bb7k4c1ue2d1u"]
+[gd_scene load_steps=13 format=3 uid="uid://bb7k4c1ue2d1u"]
 
 [ext_resource type="Script" path="res://src/hub/hub.gd" id="1_utw7n"]
-[ext_resource type="PackedScene" uid="uid://ct7rww0ebf14s" path="res://src/player/player.tscn" id="2_j8168"]
 [ext_resource type="Script" path="res://src/shop/shop.gd" id="2_lgfrx"]
 [ext_resource type="Script" path="res://src/ground_object/ground_object.gd" id="3_48y66"]
 [ext_resource type="Texture2D" uid="uid://cjsq5dy6icxaf" path="res://assets/bones/bone_1.png" id="4_hs6pd"]
@@ -106,8 +105,5 @@ shape = SubResource("CylinderShape3D_yw335")
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 billboard = 1
 texture = ExtResource("4_ql8hu")
-
-[node name="Player" parent="." instance=ExtResource("2_j8168")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1, 12)
 
 [connection signal="body_entered" from="Portal" to="." method="_on_portal_body_entered"]

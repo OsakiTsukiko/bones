@@ -14,6 +14,7 @@ var heart_filled = load("res://assets/ui/heart_filled.png")
 var heart_empty = load("res://assets/ui/heart_empty.png")
 
 var SPEED = 120  # Adjust the speed as needed
+var player_money = 0
 
 var target_rotation;
 var rotation_speed = 10
@@ -25,6 +26,27 @@ enum iih {
 }
 
 var item_in_hand = iih.SWORD
+
+func load_data(player_data: Dictionary):
+	lifes = player_data["lives"]
+	player_money = player_data["player_money"]	
+
+func _ready() -> void:
+	target_rotation = rotation.y
+	if (lifes == 1):
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_empty
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_empty
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H3.texture = heart_filled
+	
+	if (lifes == 2):
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_empty
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_filled
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H3.texture = heart_filled
+	
+	if (lifes == 3):
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_filled
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_filled
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H3.texture = heart_filled
 
 func take_damage(value: int):
 	# print("DAMAGE: ", value)
@@ -49,9 +71,6 @@ func take_damage(value: int):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_filled
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_filled
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H3.texture = heart_filled
-
-func _ready() -> void:
-	target_rotation = rotation.y
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("swap") && !Input.is_action_pressed("attack"):
