@@ -6,3 +6,9 @@
 script = ExtResource("1_apn0j")
 
 [node name="Blocks" type="Node3D" parent="."]
+
+[node name="RedCrystalTimer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
+[connection signal="timeout" from="RedCrystalTimer" to="." method="_on_red_crystal_timer_timeout"]

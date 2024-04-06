@@ -4,8 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://cqo533kjgy1v1" path="res://icon.svg" id="2_ep5up"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_yw335"]
+height = 4.65644
 
 [node name="GroundObject" type="Area3D"]
+collision_layer = 0
+collision_mask = 128
 script = ExtResource("1_5kmaq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
