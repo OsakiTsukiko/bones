@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1lrx28rnlm8n"]
+[gd_scene load_steps=9 format=3 uid="uid://d1lrx28rnlm8n"]
 
 [ext_resource type="Script" path="res://src/test/Node3D.gd" id="1_54cst"]
 [ext_resource type="PackedScene" uid="uid://ct7rww0ebf14s" path="res://src/player/player.tscn" id="2_4ryj3"]
+[ext_resource type="PackedScene" uid="uid://8llb85vfyd1i" path="res://src/ground_object/ground_object.tscn" id="3_uvgp6"]
 
 [sub_resource type="Gradient" id="Gradient_3a5wg"]
 offsets = PackedFloat32Array(0.00847458, 0.508475, 0.711864, 1)
@@ -32,3 +33,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 7)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_qeo4e")
+
+[node name="GroundItem" parent="." instance=ExtResource("3_uvgp6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 10)

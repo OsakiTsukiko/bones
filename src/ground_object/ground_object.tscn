@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://8llb85vfyd1i"]
+
+[ext_resource type="Script" path="res://src/ground_object/ground_object.gd" id="1_5kmaq"]
+[ext_resource type="Texture2D" uid="uid://cqo533kjgy1v1" path="res://icon.svg" id="2_ep5up"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yw335"]
+
+[node name="GroundObject" type="Area3D"]
+script = ExtResource("1_5kmaq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_yw335")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+billboard = 1
+texture = ExtResource("2_ep5up")
