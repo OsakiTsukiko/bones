@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cqr4nwnprgxuf" path="res://assets/ui/item_frame.png" id="3_2nfe0"]
 [ext_resource type="Texture2D" uid="uid://cssvcad5prlkl" path="res://assets/ui/heart_filled.png" id="3_fgxpd"]
 [ext_resource type="Texture2D" uid="uid://dvrwcwyeb05el" path="res://assets/randy/randy_running_0.png" id="3_oq00n"]
+[ext_resource type="Script" path="res://src/player/player_camera.gd" id="3_ox2qh"]
 [ext_resource type="Texture2D" uid="uid://14x1bub882bj" path="res://assets/items/boots.png" id="5_eg7nj"]
 [ext_resource type="Texture2D" uid="uid://qarcepxaypgu" path="res://assets/randy/randy_running_back_0.png" id="5_qpg21"]
 [ext_resource type="Texture2D" uid="uid://1v4ns2ew8hwy" path="res://assets/randy/randy_running_back_1.png" id="6_tdgn1"]
@@ -282,6 +283,7 @@ mesh = SubResource("QuadMesh_srkao")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.948374, 0.317156, 0, -0.317156, 0.948374, 0.151396, 2.00295, 4.81901)
+script = ExtResource("3_ox2qh")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
 
@@ -427,6 +429,39 @@ layout_mode = 2
 texture = ExtResource("10_78r1c")
 expand_mode = 2
 stretch_mode = 5
+
+[node name="Cooldown" type="CenterContainer" parent="Camera3D/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Container" type="Control" parent="Camera3D/CanvasLayer/Cooldown"]
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Bar" type="TextureProgressBar" parent="Camera3D/CanvasLayer/Cooldown/Container"]
+layout_mode = 2
+offset_left = 16.0
+offset_top = -54.0
+offset_right = 1096.0
+offset_bottom = 1026.0
+grow_horizontal = 2
+rotation = 1.5708
+scale = Vector2(0.05, 0.05)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 50.0
+fill_mode = 3
+texture_under = ExtResource("8_igww2")
+texture_progress = ExtResource("8_igww2")
+tint_under = Color(1, 1, 1, 0.101961)
+tint_progress = Color(1, 1, 1, 0.67451)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
