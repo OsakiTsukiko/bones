@@ -1,11 +1,15 @@
-[gd_scene load_steps=38 format=3 uid="uid://ct7rww0ebf14s"]
+[gd_scene load_steps=42 format=3 uid="uid://ct7rww0ebf14s"]
 
 [ext_resource type="Texture2D" uid="uid://btrc0csfapjdb" path="res://assets/randy/randy.png" id="2_5i6hw"]
 [ext_resource type="Script" path="res://src/player/player.gd" id="2_65niv"]
 [ext_resource type="Texture2D" uid="uid://lux4c2eonle3" path="res://assets/randy/randy_running_1.png" id="2_u730u"]
+[ext_resource type="Texture2D" uid="uid://cqr4nwnprgxuf" path="res://assets/ui/item_frame.png" id="3_2nfe0"]
+[ext_resource type="Texture2D" uid="uid://cssvcad5prlkl" path="res://assets/ui/heart_filled.png" id="3_fgxpd"]
 [ext_resource type="Texture2D" uid="uid://dvrwcwyeb05el" path="res://assets/randy/randy_running_0.png" id="3_oq00n"]
 [ext_resource type="Texture2D" uid="uid://qarcepxaypgu" path="res://assets/randy/randy_running_back_0.png" id="5_qpg21"]
 [ext_resource type="Texture2D" uid="uid://1v4ns2ew8hwy" path="res://assets/randy/randy_running_back_1.png" id="6_tdgn1"]
+[ext_resource type="Texture2D" uid="uid://cn3vsd0c8c4ol" path="res://assets/misc/shield.png" id="7_eva1s"]
+[ext_resource type="Texture2D" uid="uid://bpgda7p0abbdy" path="res://assets/misc/sword.png" id="8_igww2"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2f213"]
 height = 0.8
@@ -271,6 +275,80 @@ mesh = SubResource("QuadMesh_srkao")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.948374, 0.317156, 0, -0.317156, 0.948374, 0.151396, 2.00295, 4.81901)
 
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
+
+[node name="Control" type="MarginContainer" parent="Camera3D/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/CanvasLayer/Control"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="HAND" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_2nfe0")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HAND"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HAND/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("8_igww2")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Container" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="H1" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_fgxpd")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="H2" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_fgxpd")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="H3" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_fgxpd")
+expand_mode = 2
+stretch_mode = 5
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ofoc1")
@@ -283,9 +361,8 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 billboard = 1
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_o8oou")
-animation = &"run_backwards"
+animation = &"run"
 autoplay = "idle"
-frame_progress = 0.642727
 
 [node name="LEFT" type="Area3D" parent="."]
 collision_layer = 0
@@ -309,6 +386,20 @@ collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ATTACK"]
 shape = SubResource("CylinderShape3D_de1n7")
+
+[node name="Shield" type="Sprite3D" parent="."]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -0.248078, 0.0103526, 0.193365)
+visible = false
+texture = ExtResource("7_eva1s")
+
+[node name="Sword" type="Sprite3D" parent="."]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, -0.255271, 0.513866, 0.194245)
+visible = false
+texture = ExtResource("8_igww2")
+
+[node name="AttackTimer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
 
 [connection signal="body_entered" from="LEFT" to="." method="_on_left_body_entered"]
 [connection signal="body_entered" from="RIGHT" to="." method="_on_right_body_entered"]

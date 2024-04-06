@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnmgvu1a7s0ns"]
+
+[ext_resource type="Script" path="res://src/shop/shop.gd" id="1_aj4aq"]
+[ext_resource type="PackedScene" uid="uid://8llb85vfyd1i" path="res://src/ground_object/ground_object.tscn" id="2_k2p2y"]
+
+[node name="Shop" type="Node3D"]
+script = ExtResource("1_aj4aq")
+
+[node name="ShopKeeper" parent="." instance=ExtResource("2_k2p2y")]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Object1" parent="." instance=ExtResource("2_k2p2y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+collision_layer = 2
+collision_mask = 8
+
+[node name="Object2" parent="." instance=ExtResource("2_k2p2y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+collision_layer = 2
+collision_mask = 8
+
+[node name="Object3" parent="." instance=ExtResource("2_k2p2y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+collision_layer = 16
+collision_mask = 8

@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bb7k4c1ue2d1u"]
+[gd_scene load_steps=13 format=3 uid="uid://bb7k4c1ue2d1u"]
 
 [ext_resource type="Script" path="res://src/hub/hub.gd" id="1_utw7n"]
-[ext_resource type="PackedScene" uid="uid://ct7rww0ebf14s" path="res://src/player/player.tscn" id="2_j8168"]
-[ext_resource type="PackedScene" uid="uid://d6kcb8jtf3jb" path="res://src/portal/portal.tscn" id="3_bfgv5"]
+[ext_resource type="Script" path="res://src/shop/shop.gd" id="2_lgfrx"]
+[ext_resource type="Script" path="res://src/ground_object/ground_object.gd" id="3_48y66"]
+[ext_resource type="Texture2D" uid="uid://cjsq5dy6icxaf" path="res://assets/bones/bone_1.png" id="4_hs6pd"]
+[ext_resource type="Texture2D" uid="uid://cjbb1xi4ksq8x" path="res://assets/misc/portal.png" id="4_ql8hu"]
+[ext_resource type="Texture2D" uid="uid://cssvcad5prlkl" path="res://assets/ui/heart_filled.png" id="5_mxuru"]
 
 [sub_resource type="Gradient" id="Gradient_l11cq"]
 offsets = PackedFloat32Array(0, 0.322388, 0.716418, 1)
@@ -23,18 +26,84 @@ sky_material = SubResource("PanoramaSkyMaterial_3sa0a")
 background_mode = 2
 sky = SubResource("Sky_r6dqr")
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yw335"]
+
 [node name="Hub" type="Node3D"]
 script = ExtResource("1_utw7n")
-
-[node name="Player" parent="." instance=ExtResource("2_j8168")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1, 7)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7qd02")
 
-[node name="Portal" parent="." instance=ExtResource("3_bfgv5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+[node name="Shop" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1, 16)
+script = ExtResource("2_lgfrx")
 
-[connection signal="area_shape_entered" from="Portal" to="." method="_on_portal_area_shape_entered"]
+[node name="ShopKeeper" type="Area3D" parent="Shop"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_48y66")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Shop/ShopKeeper"]
+shape = SubResource("CylinderShape3D_yw335")
+
+[node name="Sprite3D" type="Sprite3D" parent="Shop/ShopKeeper"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+billboard = 1
+texture = ExtResource("4_hs6pd")
+
+[node name="Object1" type="Area3D" parent="Shop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("3_48y66")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Shop/Object1"]
+shape = SubResource("CylinderShape3D_yw335")
+
+[node name="Sprite3D" type="Sprite3D" parent="Shop/Object1"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+billboard = 1
+texture = ExtResource("5_mxuru")
+
+[node name="Object2" type="Area3D" parent="Shop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("3_48y66")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Shop/Object2"]
+shape = SubResource("CylinderShape3D_yw335")
+
+[node name="Sprite3D" type="Sprite3D" parent="Shop/Object2"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+billboard = 1
+texture = ExtResource("5_mxuru")
+
+[node name="Object3" type="Area3D" parent="Shop"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+collision_layer = 16
+collision_mask = 8
+script = ExtResource("3_48y66")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Shop/Object3"]
+shape = SubResource("CylinderShape3D_yw335")
+
+[node name="Sprite3D" type="Sprite3D" parent="Shop/Object3"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+billboard = 1
+texture = ExtResource("5_mxuru")
+
+[node name="Portal" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.5, 8)
+collision_mask = 8
+script = ExtResource("3_48y66")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Portal"]
+shape = SubResource("CylinderShape3D_yw335")
+
+[node name="Sprite3D" type="Sprite3D" parent="Portal"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+billboard = 1
+texture = ExtResource("4_ql8hu")
+
 [connection signal="body_entered" from="Portal" to="." method="_on_portal_body_entered"]
-[connection signal="body_shape_entered" from="Portal" to="." method="_on_portal_body_shape_entered"]
