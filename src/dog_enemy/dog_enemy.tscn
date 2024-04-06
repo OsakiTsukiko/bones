@@ -1,12 +1,17 @@
-[gd_scene load_steps=17 format=3 uid="uid://0kpu33ha50ga"]
+[gd_scene load_steps=24 format=3 uid="uid://0kpu33ha50ga"]
 
 [ext_resource type="Script" path="res://src/dog_enemy/dog_enemy.gd" id="1_07fiy"]
 [ext_resource type="Texture2D" uid="uid://b7dxt1y6rliu2" path="res://assets/dog/dog_1.png" id="1_ir0hh"]
-[ext_resource type="Texture2D" uid="uid://depmsdlataooa" path="res://assets/dog/dog_0.png" id="3_dor25"]
+[ext_resource type="Texture2D" uid="uid://tvklbeitlxln" path="res://assets/dog/bite/bite_0.png" id="3_yk61x"]
+[ext_resource type="Texture2D" uid="uid://dfrfrtr5pvo11" path="res://assets/dog/bite/bite_1.png" id="4_hfi3o"]
+[ext_resource type="Texture2D" uid="uid://cf3mukrbfqy31" path="res://assets/dog/bite/bite_2.png" id="5_ibhvg"]
+[ext_resource type="Texture2D" uid="uid://bym14rlmeruyf" path="res://assets/dog/bite/bite_3.png" id="6_hxn8m"]
+[ext_resource type="Texture2D" uid="uid://c08epp0x7uqkr" path="res://assets/dog/dog_01_02.png" id="7_ybxwu"]
+[ext_resource type="Texture2D" uid="uid://ttqb3sorugkg" path="res://assets/dog/dog_02_02.png" id="8_pfsuh"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_qsbwl"]
 height = 0.809829
-radius = 0.422402
+radius = 0.19953
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rspeu"]
 load_path = "res://.godot/imported/dog_0.png-79c9880a4ae73e95fbe05af6cd7e6241.s3tc.ctex"
@@ -75,9 +80,29 @@ tracks/0/keys = {
 "values": [SubResource("QuadMesh_pny7r"), SubResource("QuadMesh_46qcb")]
 }
 
+[sub_resource type="Animation" id="Animation_xnjqt"]
+resource_name = "null"
+
+[sub_resource type="Animation" id="Animation_qd1xq"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite3D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2a63v"]
 _data = {
+"attack": SubResource("Animation_qd1xq"),
 "idle": SubResource("Animation_wvpbg"),
+"null": SubResource("Animation_xnjqt"),
 "run": SubResource("Animation_uka83")
 }
 
@@ -85,7 +110,51 @@ _data = {
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_dor25")
+"texture": ExtResource("3_yk61x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yk61x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hfi3o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hfi3o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yk61x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yk61x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hfi3o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hfi3o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yk61x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yk61x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ibhvg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ibhvg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hxn8m")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_ybxwu")
 }],
 "loop": true,
 "name": &"idle",
@@ -93,10 +162,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_dor25")
+"texture": ExtResource("7_ybxwu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_ir0hh")
+"texture": ExtResource("8_pfsuh")
 }],
 "loop": true,
 "name": &"run",
@@ -124,9 +193,18 @@ speed_scale = 4.0
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+centered = false
+offset = Vector2(-540, -540)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_86301")
-animation = &"run"
+animation = &"attack"
 autoplay = "run"
-frame_progress = 0.692311
+frame_progress = 0.939674
+
+[node name="AnimAttackTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="AnimAttackTimer" to="." method="_on_anim_attack_timer_timeout"]
