@@ -8,6 +8,8 @@ extends CharacterBody3D
 
 @onready var attack_timer = $AttackTimer
 
+@onready var atk_area = $LaAttack
+
 var sword_texture = load("res://assets/misc/sword.png")
 var shield_texture = load("res://assets/misc/shield.png")
 var heart_filled = load("res://assets/ui/heart_filled.png")
@@ -97,7 +99,7 @@ func take_damage(value: int):
 	# print("DAMAGE: ", value)
 	if (item_in_hand == iih.SHIELD && Input.is_action_pressed("attack")):
 		return
-	print(lives)
+	# print(lives)
 	if extra_heart:
 		extra_heart = false
 		SceneManager.player_data["items"].erase("heart")
@@ -139,12 +141,16 @@ func _physics_process(delta):
 		shield.visible = false 
 		SPEED = 120
 		
-	if Input.is_action_pressed("attack") && item_in_hand == iih.SWORD:
+	if Input.is_action_just_pressed("attack") && item_in_hand == iih.SWORD:
 		if (attack_timer.is_stopped()):
-			shield.visible = false 
-			SPEED = 120
 			print("ATTACK")
 			attack_timer.start()
+			shield.visible = false 
+			SPEED = 120
+			for node in atk_area.get_overlapping_bodies():
+				print(node)
+				if node.has_method("take_damage"):
+					node.take_damage()
 		
 	
 	rotation.y = lerp_angle(rotation.y, target_rotation, rotation_speed * delta)

@@ -265,8 +265,11 @@ size = Vector3(0.995117, 1, 1)
 height = 1.29849
 radius = 0.207748
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mkgcm"]
+radius = 0.549776
+
 [node name="Player" type="CharacterBody3D"]
-collision_layer = 8
+collision_layer = 136
 collision_mask = 8
 script = ExtResource("2_65niv")
 
@@ -476,6 +479,13 @@ texture = ExtResource("8_igww2")
 [node name="AttackTimer" type="Timer" parent="."]
 process_callback = 0
 one_shot = true
+
+[node name="LaAttack" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LaAttack"]
+shape = SubResource("CylinderShape3D_mkgcm")
 
 [connection signal="body_entered" from="LEFT" to="." method="_on_left_body_entered"]
 [connection signal="body_entered" from="RIGHT" to="." method="_on_right_body_entered"]

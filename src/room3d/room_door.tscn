@@ -1,20 +1,22 @@
-[gd_scene load_steps=8 format=3 uid="uid://c1yy26038wx8"]
+[gd_scene load_steps=11 format=3 uid="uid://xgqbtb3tyc17"]
 
-[ext_resource type="Script" path="res://src/room3d/room_bridge.gd" id="1_qaugj"]
-[ext_resource type="Texture2D" uid="uid://m2bln40okh8d" path="res://assets/floor/floor_wood.png" id="2_1jreu"]
+[ext_resource type="Script" path="res://src/room3d/room_door.gd" id="1_fkfcv"]
+[ext_resource type="Texture2D" uid="uid://m2bln40okh8d" path="res://assets/floor/floor_wood.png" id="2_5bjof"]
+[ext_resource type="Script" path="res://src/ground_object/ground_object.gd" id="3_20fuh"]
+[ext_resource type="Texture2D" uid="uid://c1wmrswqfqclj" path="res://assets/misc/door.png" id="4_ncmq0"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3o1kv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vsfgp"]
 shading_mode = 0
-albedo_texture = ExtResource("2_1jreu")
+albedo_texture = ExtResource("2_5bjof")
 texture_filter = 0
 texture_repeat = false
 
-[sub_resource type="QuadMesh" id="QuadMesh_a2lys"]
-material = SubResource("StandardMaterial3D_3o1kv")
+[sub_resource type="QuadMesh" id="QuadMesh_12a1p"]
+material = SubResource("StandardMaterial3D_vsfgp")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mpod8"]
 shading_mode = 0
-albedo_texture = ExtResource("2_1jreu")
+albedo_texture = ExtResource("2_5bjof")
 texture_filter = 0
 texture_repeat = false
 
@@ -23,12 +25,15 @@ material = SubResource("StandardMaterial3D_mpod8")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_26w07"]
 
-[node name="RoomBridge" type="Node3D"]
-script = ExtResource("1_qaugj")
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yw335"]
+height = 4.65644
+
+[node name="RoomDoor" type="Node3D"]
+script = ExtResource("1_fkfcv")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0)
-mesh = SubResource("QuadMesh_a2lys")
+mesh = SubResource("QuadMesh_12a1p")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
@@ -54,3 +59,17 @@ collision_mask = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_26w07")
+
+[node name="DOOR" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 0
+collision_mask = 128
+script = ExtResource("3_20fuh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DOOR"]
+shape = SubResource("CylinderShape3D_yw335")
+
+[node name="Sprite3D" type="Sprite3D" parent="DOOR"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.25, 0)
+billboard = 1
+texture = ExtResource("4_ncmq0")
