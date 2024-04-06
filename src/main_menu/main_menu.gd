@@ -3,12 +3,13 @@ extends Panel
 
 
 func _on_button_start_pressed():
-	# move to start scene
+	SoundManager.play_sound("interface");
 	pass # Replace with function body.
 
 
 func _on_button_toggle_sound_pressed():
-	pass # Replace with function body.
+	SoundManager.play_sound("interface");
+	SoundManager.toggle_sfx();
 
 func _on_button_exit_pressed():
 	get_tree().quit()
