@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dct6kn7jq0yga"
-path.s3tc="res://.godot/imported/heart_empty.png-b7d477f53aa341405ef7f7ff65b39ec9.s3tc.ctex"
+uid="uid://14x1bub882bj"
+path.s3tc="res://.godot/imported/boots.png-9d2719697bf4cc81970933cca3bab496.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/ui/heart_empty.png"
-dest_files=["res://.godot/imported/heart_empty.png-b7d477f53aa341405ef7f7ff65b39ec9.s3tc.ctex"]
+source_file="res://assets/items/boots.png"
+dest_files=["res://.godot/imported/boots.png-9d2719697bf4cc81970933cca3bab496.s3tc.ctex"]
 
 [params]
 
