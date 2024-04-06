@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://ct7rww0ebf14s"]
+[gd_scene load_steps=47 format=3 uid="uid://ct7rww0ebf14s"]
 
 [ext_resource type="Texture2D" uid="uid://btrc0csfapjdb" path="res://assets/randy/randy.png" id="2_5i6hw"]
 [ext_resource type="Script" path="res://src/player/player.gd" id="2_65niv"]
@@ -11,7 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://1v4ns2ew8hwy" path="res://assets/randy/randy_running_back_1.png" id="6_tdgn1"]
 [ext_resource type="Texture2D" uid="uid://cn3vsd0c8c4ol" path="res://assets/misc/shield.png" id="7_eva1s"]
 [ext_resource type="Texture2D" uid="uid://dct6kn7jq0yga" path="res://assets/ui/heart_empty.png" id="7_yabx7"]
+[ext_resource type="FontFile" uid="uid://ix6f0ekut8gh" path="res://assets/fonts/Blackwood Castle.ttf" id="8_2ab2v"]
 [ext_resource type="Texture2D" uid="uid://bpgda7p0abbdy" path="res://assets/misc/sword.png" id="8_igww2"]
+[ext_resource type="Texture2D" uid="uid://brfgitttgy815" path="res://assets/bones/bone_2.png" id="9_84l8x"]
+[ext_resource type="Texture2D" uid="uid://cjbb1xi4ksq8x" path="res://assets/misc/portal.png" id="10_c8kjw"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2f213"]
 height = 0.8
@@ -373,6 +376,52 @@ stretch_mode = 5
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture = ExtResource("3_fgxpd")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/normal_font = ExtResource("8_2ab2v")
+theme_override_font_sizes/normal_font_size = 40
+text = "0"
+fit_content = true
+autowrap_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("9_84l8x")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer2"]
+clip_contents = false
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/normal_font = ExtResource("8_2ab2v")
+theme_override_font_sizes/normal_font_size = 40
+text = "0"
+fit_content = true
+autowrap_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("10_c8kjw")
 expand_mode = 2
 stretch_mode = 5
 

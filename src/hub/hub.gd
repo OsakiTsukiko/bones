@@ -33,7 +33,17 @@ func _on_portal_body_entered(body):
 func _on_item_body_entered(body, item: String):
 	if body.has_method("is_player"):
 		if !SceneManager.player_data["items"].has(item):
-			SceneManager.player_data["items"].append(item)
+			# buy item
+			if (item == "heart" && SceneManager.player_data["player_money"] >= 5):
+				SceneManager.player_data["player_money"] -= 5;
+				SceneManager.player_data["items"].append(item)
+			if (item == "speed" && SceneManager.player_data["player_money"] >= 4):
+				SceneManager.player_data["player_money"] -= 4;
+				SceneManager.player_data["items"].append(item)
+			if (item == "time" && SceneManager.player_data["player_money"] >= 7):
+				SceneManager.player_data["player_money"] -= 7;
+				SceneManager.player_data["items"].append(item)
+			
 			$Player.load_data(SceneManager.player_data)
 
 func _change_scene_to(scene: PackedScene):

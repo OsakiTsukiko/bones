@@ -8,7 +8,8 @@ var player_data: Dictionary = {
 	"iih": "sword",
 	"items": [],
 	"lives": 3,
-	"player_money": 0
+	"player_money": 10,
+	"fossils": 0
 }
 
 func save_scene_with_data(id: String, data: Dictionary):
