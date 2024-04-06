@@ -14,5 +14,5 @@ stream = ExtResource("2_qgp0t")
 [node name="SnarlSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_yql0f")
 
-[node name="BarkSOund" type="AudioStreamPlayer2D" parent="."]
+[node name="BarkSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_tx38q")
