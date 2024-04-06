@@ -1,11 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://xgqbtb3tyc17"]
+[gd_scene load_steps=10 format=3 uid="uid://iy3ogks0dsct"]
 
-[ext_resource type="Texture2D" uid="uid://m2bln40okh8d" path="res://assets/floor/floor_wood.png" id="2_5bjof"]
-[ext_resource type="Texture2D" uid="uid://c1wmrswqfqclj" path="res://assets/misc/door.png" id="4_ncmq0"]
+[ext_resource type="Script" path="res://src/room3d/open_room_door.gd" id="1_4pwri"]
+[ext_resource type="Texture2D" uid="uid://m2bln40okh8d" path="res://assets/floor/floor_wood.png" id="1_46gdj"]
+[ext_resource type="Texture2D" uid="uid://1dk4dt48pvse" path="res://assets/misc/door_open.png" id="2_lhjhh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vsfgp"]
 shading_mode = 0
-albedo_texture = ExtResource("2_5bjof")
+albedo_texture = ExtResource("1_46gdj")
 texture_filter = 0
 texture_repeat = false
 
@@ -14,7 +15,7 @@ material = SubResource("StandardMaterial3D_vsfgp")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mpod8"]
 shading_mode = 0
-albedo_texture = ExtResource("2_5bjof")
+albedo_texture = ExtResource("1_46gdj")
 texture_filter = 0
 texture_repeat = false
 
@@ -26,7 +27,8 @@ material = SubResource("StandardMaterial3D_mpod8")
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_yw335"]
 height = 4.65644
 
-[node name="RoomDoor" type="Node3D"]
+[node name="RoomDoor" type="Node3D" groups=["open_door_room"]]
+script = ExtResource("1_4pwri")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0)
@@ -68,4 +70,4 @@ shape = SubResource("CylinderShape3D_yw335")
 [node name="Sprite3D" type="Sprite3D" parent="DOOR"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.25, 0)
 billboard = 1
-texture = ExtResource("4_ncmq0")
+texture = ExtResource("2_lhjhh")

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbxnqcpkst71p"]
+
+[ext_resource type="Texture2D" uid="uid://capd7guu785pv" path="res://assets/dog/dead.png" id="1_75mdl"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yw335"]
+height = 0.678711
+
+[node name="Cadaver" type="Area3D"]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_yw335")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+billboard = 1
+texture = ExtResource("1_75mdl")
