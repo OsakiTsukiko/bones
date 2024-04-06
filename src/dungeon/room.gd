@@ -9,6 +9,10 @@ var coords: Vector2i
 var is_boss: bool
 var layout: Array[Array]
 var doors: Dictionary
+var n_bridges: Array[Vector2i]
+var s_bridges: Array[Vector2i]
+var e_bridges: Array[Vector2i]
+var w_bridges: Array[Vector2i]
 
 enum Tiles {
 	EMPTY,
@@ -67,24 +71,28 @@ func add_neighbour(direction, offset):
 			var pos = Vector2i(0, Room.ROOM_SIZE/2+offset)
 			while self.layout[pos.x][pos.y] != Tiles.GROUND and pos.x < Room.ROOM_SIZE/2:
 				self.layout[pos.x][pos.y] = Tiles.BRIDGE
+				n_bridges.append(Vector2i(pos.x, pos.y))
 				pos.x += 1
 			self.doors['N'] = offset
 		'S':
 			var pos = Vector2i(Room.ROOM_SIZE-1, Room.ROOM_SIZE/2+offset)
 			while self.layout[pos.x][pos.y] != Tiles.GROUND and pos.x > Room.ROOM_SIZE/2:
 				self.layout[pos.x][pos.y] = Tiles.BRIDGE
+				s_bridges.append(Vector2i(pos.x, pos.y))
 				pos.x -= 1
 			self.doors['S'] = offset
 		'E':
 			var pos = Vector2i(Room.ROOM_SIZE/2+offset, Room.ROOM_SIZE-1)
 			while self.layout[pos.x][pos.y] != Tiles.GROUND and pos.y > Room.ROOM_SIZE/2:
 				self.layout[pos.x][pos.y] = Tiles.BRIDGE
+				e_bridges.append(Vector2i(pos.x, pos.y))
 				pos.y -= 1
 			self.doors['E'] = offset
 		'W':
 			var pos = Vector2i(Room.ROOM_SIZE/2+offset, 0)
 			while self.layout[pos.x][pos.y] != Tiles.GROUND and pos.y < Room.ROOM_SIZE/2:
 				self.layout[pos.x][pos.y] = Tiles.BRIDGE
+				w_bridges.append(Vector2i(pos.x, pos.y))
 				pos.y += 1
 			self.doors['W'] = offset
 

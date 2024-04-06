@@ -164,9 +164,9 @@ animations = [{
 height = 1.14179
 radius = 1.1932
 
-[node name="DogEnemy" type="CharacterBody3D"]
+[node name="DogEnemy" type="CharacterBody3D" groups=["enemy"]]
 collision_layer = 4
-collision_mask = 4
+collision_mask = 0
 script = ExtResource("1_07fiy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -209,5 +209,9 @@ shape = SubResource("CylinderShape3D_sswel")
 [node name="AnimAttackTimer2" type="Timer" parent="."]
 one_shot = true
 
+[node name="RndTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="AnimAttackTimer" to="." method="_on_anim_attack_timer_timeout"]
 [connection signal="timeout" from="AnimAttackTimer2" to="." method="_on_anim_attack_timer_2_timeout"]
+[connection signal="timeout" from="RndTimer" to="." method="_on_rnd_timer_timeout"]
