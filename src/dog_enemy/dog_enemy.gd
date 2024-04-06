@@ -46,15 +46,18 @@ func stop_attack():
 	stop_attackv = true
 
 func do_attack():
-	anim_sprite.animation = "attack"
+	anim_sprite.play("attack")
 	$AnimAttackTimer.start()
+	$AnimAttackTimer2.start()
 
 func _on_anim_attack_timer_timeout() -> void:
-	for body in $ATTACK.get_overlapping_bodies():
-		if (body.has_method("take_damage")):
-			body.take_damage(50)
 	if (stop_attackv):
 		is_attacking = false
 	if (is_attacking):
 		do_attack()
 		
+
+func _on_anim_attack_timer_2_timeout() -> void:
+	for body in $ATTACK.get_overlapping_bodies():
+		if (body.has_method("take_damage")):
+			body.take_damage(50)
