@@ -10,6 +10,7 @@ func load_data(data: Dictionary):
 	player.load_data(SceneManager.get_player_data())
 
 func setup_room():
+	var room: Room = Room.new(Vector2i(0, 0), false);
 	var room_3d: Room3D = Room3D.new(room)
 	add_child(room_3d);
 

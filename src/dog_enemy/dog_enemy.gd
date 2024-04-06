@@ -23,7 +23,7 @@ func _physics_process(delta):
 		var direction = Vector3.FORWARD;
 		if (direction != Vector3.ZERO):
 			# anim_player.current_animation = "run"
-			anim_sprite.animation = "run"
+			anim_sprite.play("run")
 		
 		direction = direction.normalized()
 		velocity = transform.basis * direction * delta * SPEED;
