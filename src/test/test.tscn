@@ -7,20 +7,20 @@
 offsets = PackedFloat32Array(0.00847458, 0.508475, 0.711864, 1)
 colors = PackedColorArray(0.914007, 0.910993, 0, 1, 0.565404, 0.140876, 0.124939, 1, 0.141931, 0.035705, 0.00677328, 1, 0.0556347, 2.42534e-08, 6.01634e-09, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_vxnt3"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_oreec"]
 gradient = SubResource("Gradient_3a5wg")
 fill_from = Vector2(0.516484, 0)
 fill_to = Vector2(0.532967, 1)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0ruul"]
-panorama = SubResource("GradientTexture2D_vxnt3")
+panorama = SubResource("GradientTexture2D_oreec")
 
-[sub_resource type="Sky" id="Sky_rq7ok"]
+[sub_resource type="Sky" id="Sky_giq5q"]
 sky_material = SubResource("PanoramaSkyMaterial_0ruul")
 
 [sub_resource type="Environment" id="Environment_qeo4e"]
 background_mode = 2
-sky = SubResource("Sky_rq7ok")
+sky = SubResource("Sky_giq5q")
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_54cst")
