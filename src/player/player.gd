@@ -3,10 +3,13 @@ extends CharacterBody3D
 # @onready var anim_player = $AnimationPlayer
 @onready var anim_sprite = $AnimatedSprite3D
 
-const SPEED = 200  # Adjust the speed as needed
+const SPEED = 120  # Adjust the speed as needed
 
 var target_rotation;
 var rotation_speed = 10;
+
+func take_damage(value: int):
+	print("DAMAGE: ", value)
 
 func _ready() -> void:
 	target_rotation = rotation.y
