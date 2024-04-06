@@ -29,7 +29,16 @@ var item_in_hand = iih.SWORD
 
 func load_data(player_data: Dictionary):
 	lifes = player_data["lives"]
-	player_money = player_data["player_money"]	
+	player_money = player_data["player_money"]
+	for item in player_data["items"]:
+		match item:
+			"life":
+				print("LIVES USED")
+				lifes = min(3, lifes + 1) 
+			"time":
+				SceneManager
+			"speed":
+				pass
 
 func _ready() -> void:
 	target_rotation = rotation.y
