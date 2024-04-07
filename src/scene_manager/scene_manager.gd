@@ -51,6 +51,8 @@ func get_player_data():
 	return player_data
 
 func pre_enter_dungeon():
+	TransitionScreen.transition_in()
+	await TransitionScreen.done_fading
 	get_tree().change_scene_to_packed(rnode_scene)
 
 func rn_init(n: Node3D):
@@ -61,7 +63,7 @@ func enter_dungeon():
 	dungeon.generate_dungeon()
 	var room_zero = dungeon.rooms[hash(Vector2i(0, 0))]
 	var rm_node = Room3D.new(room_zero, [], Room3D.CrystalE.RED)
-	
+
 	for child in parent_node.get_children():
 		child.queue_free()
 	var rmplh = room_placeholder.instantiate()
@@ -69,6 +71,7 @@ func enter_dungeon():
 	rmplh.add_child(rm_node)
 
 func enter_room(coords: Vector2i, from: String, darr: Array[String] = [], player_rotation: Vector3 = Vector3.ZERO):
+	TransitionScreen.transition_in()
 	var new_room: Room = dungeon.rooms[hash(coords)]
 	var new_crystal := Room3D.CrystalE.RED
 	if (scene_data.has(str(hash(coords)))):
@@ -78,6 +81,7 @@ func enter_room(coords: Vector2i, from: String, darr: Array[String] = [], player
 		new_crystal = Room3D.CrystalE.GRAY
 	var rrm_node = Room3D.new(new_room, darr, new_crystal)
 	rrm_node.from = from 
+	await TransitionScreen.done_fading
 	for child in parent_node.get_children():
 		child.queue_free()
 	var rmplh = room_placeholder.instantiate()
