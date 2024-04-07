@@ -55,6 +55,10 @@ grow_vertical = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="Title" type="RichTextLabel" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -65,10 +69,6 @@ bbcode_enabled = true
 text = "[center]Deranged Archaeologist[/center]
 "
 fit_content = true
-
-[node name="Spacer" type="Control" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
