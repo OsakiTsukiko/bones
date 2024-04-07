@@ -1,6 +1,6 @@
 extends Node
 
-const ROOM_COUNT = 2
+const ROOM_COUNT = 5
 
 var room_placeholder: PackedScene = preload("res://src/room_placeholder/room_placeholder.tscn")
 var rnode_scene: PackedScene = preload("res://r_node.tscn")
@@ -126,7 +126,7 @@ func reset():
 		"items": [],
 		"lives": 3,
 		"player_money": 10,
-		"player_fossils": 100,
+		"player_fossils": 0,
 		"donated_fossils": 0
 	}
 	is_dungeon_future = false
