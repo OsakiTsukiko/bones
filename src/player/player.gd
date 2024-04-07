@@ -177,6 +177,7 @@ func _physics_process(delta):
 					node.take_damage()
 			if !hit and Input.get_connected_joypads().size():
 				Input.start_joy_vibration(Input.get_connected_joypads()[0], 0.25, 0.25, 0.25)
+			$AnimationPlayer.play("show_hit_decal")
 					
 	if !(attack_timer.is_stopped()):
 		attack_bar.value = 100*(1-attack_timer.time_left)

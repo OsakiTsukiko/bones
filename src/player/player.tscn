@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://ct7rww0ebf14s"]
+[gd_scene load_steps=52 format=3 uid="uid://ct7rww0ebf14s"]
 
 [ext_resource type="Texture2D" uid="uid://btrc0csfapjdb" path="res://assets/randy/randy.png" id="2_5i6hw"]
 [ext_resource type="Script" path="res://src/player/player.gd" id="2_65niv"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bpgda7p0abbdy" path="res://assets/misc/sword.png" id="8_igww2"]
 [ext_resource type="Texture2D" uid="uid://brfgitttgy815" path="res://assets/bones/bone_2.png" id="9_84l8x"]
 [ext_resource type="Texture2D" uid="uid://c1fxyuvh3kssl" path="res://assets/misc/mony.png" id="10_78r1c"]
+[ext_resource type="Texture2D" uid="uid://4b4pix55tc26" path="res://assets/ui/hit_decal.png" id="16_ktvvu"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2f213"]
 height = 0.8
@@ -216,11 +217,43 @@ tracks/0/keys = {
 "values": [SubResource("QuadMesh_4res4"), SubResource("QuadMesh_otwsi")]
 }
 
+[sub_resource type="Animation" id="Animation_v3a5b"]
+resource_name = "show_hit_decal"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite3D/HitDecal:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_q5hw6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite3D/HitDecal:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ofoc1"]
 _data = {
+"RESET": SubResource("Animation_q5hw6"),
 "idle": SubResource("Animation_6ce7n"),
 "run": SubResource("Animation_bokj0"),
-"run_back": SubResource("Animation_21284")
+"run_back": SubResource("Animation_21284"),
+"show_hit_decal": SubResource("Animation_v3a5b")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o8oou"]
@@ -477,6 +510,12 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_o8oou")
 animation = &"run"
 autoplay = "idle"
+
+[node name="HitDecal" type="Sprite3D" parent="AnimatedSprite3D"]
+transform = Transform3D(5.62843, 5.62843, 1.23634e-07, 0, -3.47934e-07, 4, 5.62843, -5.62843, -1.23634e-07, 0, -2.94581, 0)
+sorting_offset = 5.0
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("16_ktvvu")
 
 [node name="LEFT" type="Area3D" parent="."]
 collision_layer = 0
