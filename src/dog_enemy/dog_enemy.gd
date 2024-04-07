@@ -18,11 +18,13 @@ var life = 3
 var id: int
 
 func take_damage():
+	SoundManager.play_sound("dog_hurt")
 	life -= 1
 	if (life == 0):
 		dog_death.emit()
 
 func init(p_player: Node3D) -> void:
+	SoundManager.play_sound("dog_snarl")
 	id = randi()
 	player = p_player
 
@@ -60,6 +62,7 @@ func stop_attack():
 
 func do_attack():
 	anim_sprite.play("attack")
+	SoundManager.play_sound("dog_attack")
 	$AnimAttackTimer.start()
 	$AnimAttackTimer2.start()
 

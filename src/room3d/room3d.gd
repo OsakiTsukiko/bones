@@ -121,6 +121,7 @@ func spawn_mob(idk, ground_object: Area3D):
 		crystal._init_instance(0.5, blue_crystal, .2)
 		crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
 		add_child(crystal)
+		SoundManager.play_sound("crystal_activate")
 		
 		if (mbs_to_spawn == 2):
 			var d1 = dog_scene.instantiate()
@@ -173,6 +174,7 @@ func next_level(idk, ground_object: Area3D):
 	crystal._init_instance(0.5, gray_crystal, .2)
 	crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
 	add_child(crystal)
+	SoundManager.play_sound("crystal_deactivate")
 	
 	#room.doors.has("N")
 	#for block: Vector2i in room.n_bridges:

@@ -99,6 +99,7 @@ func _ready() -> void:
 func take_damage(value: int):
 	# print("DAMAGE: ", value)
 	if (item_in_hand == iih.SHIELD && Input.is_action_pressed("attack")):
+		SoundManager.play_sound("player_block")
 		return
 	# print(lives)
 	if extra_heart:
@@ -107,6 +108,7 @@ func take_damage(value: int):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = false
 		return
 	lives -= 1
+	SoundManager.play_sound("player_hurt")
 	if (lives == 0):
 		# GAME OVER 
 		pass 
@@ -148,6 +150,7 @@ func _physics_process(delta):
 			attack_timer.start()
 			shield.visible = false 
 			SPEED = 120
+			SoundManager.play_sound("player_attack")
 			for node in atk_area.get_overlapping_bodies():
 				print(node)
 				if node.has_method("take_damage"):
