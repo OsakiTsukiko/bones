@@ -43,7 +43,8 @@ func _on_portal_body_entered(body):
 
 func ed_wrapper():
 	SoundManager.play_music("dungeon")
-	SceneManager.enter_dungeon()
+	# SceneManager.enter_dungeon()
+	SceneManager.pre_enter_dungeon()
 
 func _on_item_body_entered(body, item: String):
 	if body.has_method("is_player"):

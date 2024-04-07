@@ -19,6 +19,7 @@ var id: int
 
 func take_damage():
 	SoundManager.play_sound("dog_hurt")
+	$AnimationPlayer.play("hit")
 	life -= 1
 	if (life == 0):
 		dog_death.emit()

@@ -7,6 +7,7 @@ extends CharacterBody3D
 @onready var sword = $Sword
 
 @onready var attack_timer = $AttackTimer
+@onready var attack_bar = $Camera3D/CanvasLayer/Cooldown/Container/Bar
 
 @onready var atk_area = $LaAttack
 
@@ -109,8 +110,10 @@ func take_damage(value: int):
 		return
 	lives -= 1
 	SoundManager.play_sound("player_hurt")
+	$Camera3D.camera_shake()
 	if (lives == 0):
-		# GAME OVER 
+		if Input.get_connected_joypads().size():
+			Input.start_joy_vibration(Input.get_connected_joypads()[0], 0.5, 0.5, 0.5)
 		pass 
 	if (lives == 1):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_empty
@@ -146,17 +149,29 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("attack") && item_in_hand == iih.SWORD:
 		if (attack_timer.is_stopped()):
+			attack_bar.visible = true
+			attack_bar.value = 0
 			print("ATTACK")
 			attack_timer.start()
 			shield.visible = false 
 			SPEED = 120
 			SoundManager.play_sound("player_attack")
+			var hit = false
 			for node in atk_area.get_overlapping_bodies():
 				print(node)
 				if node.has_method("take_damage"):
+					hit = true
+					if Input.get_connected_joypads().size():
+						Input.start_joy_vibration(Input.get_connected_joypads()[0], 0.25, 0.5, 0.25)
 					node.take_damage()
+			if !hit and Input.get_connected_joypads().size():
+				Input.start_joy_vibration(Input.get_connected_joypads()[0], 0.25, 0.25, 0.25)
+					
+	if !(attack_timer.is_stopped()):
+		attack_bar.value = 100*(1-attack_timer.time_left)
+	else:
+		attack_bar.visible = false
 		
-	
 	rotation.y = lerp_angle(rotation.y, target_rotation, rotation_speed * delta)
 	
 	if Input.is_action_just_pressed("rot_l"):

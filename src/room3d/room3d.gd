@@ -7,6 +7,7 @@ var room_barrier_scene: PackedScene = load("res://src/room3d/room_barrier.tscn")
 var room_bridge_scene: PackedScene = load("res://src/room3d/room_bridge.tscn")
 var room_unstable_scene: PackedScene = load("res://src/room3d/room_unstable.tscn")
 var room_door: PackedScene = load("res://src/room3d/room_door.tscn")
+var open_room_door: PackedScene = load("res://src/room3d/open_room_door.tscn")
 
 var ground_object_scene: PackedScene = load("res://src/ground_object/ground_object.tscn")
 
@@ -16,6 +17,10 @@ var gray_crystal = load("res://assets/misc/crystal_gray.png")
 var blue_crystal = load("res://assets/misc/crystal_blue.png")
 
 var dog_scene = load("res://src/dog_enemy/dog_enemy.tscn")
+
+var cadaver_scene: PackedScene = load("res://src/ground_object/cadaver.tscn")
+
+var cadavers: Array[Node3D] = []
 
 enum CrystalE {
 	RED,
@@ -32,8 +37,15 @@ var s_bruv_blocks: Array[Node3D] = []
 var w_bruv_blocks: Array[Node3D] = []
 var e_bruv_blocks: Array[Node3D] = []
 
+var directions_g: Array[String]
+
+var from: String
+var ppos: Vector3 = Vector3(-1, -1, -1)
+var dv: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO]
+
 func _init(p_room: Room, directions: Array[String], has_crystal: CrystalE = CrystalE.NONE) -> void:
 	room = p_room
+	directions_g = directions.duplicate(true)
 	for i in range(Room.ROOM_SIZE):
 		for j in range(Room.ROOM_SIZE):
 			match room.layout[i][j]:
@@ -42,25 +54,66 @@ func _init(p_room: Room, directions: Array[String], has_crystal: CrystalE = Crys
 				Room.Tiles.BRIDGE:
 					if room.n_bridges.has(Vector2i(i, j)):
 						if directions.has("N"):
-							add_tile(i, j, room_bridge_scene)
+							if (i == 0):
+								if has_crystal == CrystalE.RED:
+									var node = add_tile(i, j, open_room_door)
+									node.dir = "N"
+									ppos = node.position
+								else:
+									var node = add_tile(i, j, room_door)
+									dv[0] = node.position
+									node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("N"))
+									
+							else:
+								add_tile(i, j, room_bridge_scene)
 						else:
 							n_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
 					
 					if (room.s_bridges.has(Vector2i(i, j))):
 						if directions.has("S"):
-							add_tile(i, j, room_bridge_scene)
+							if (i == Room.ROOM_SIZE - 1):
+								if has_crystal == CrystalE.RED:
+									var node = add_tile(i, j, open_room_door)
+									node.dir = "S"
+									ppos = node.position
+								else:
+									var node = add_tile(i, j, room_door)
+									dv[1] = node.position
+									node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("S"))
+							else:
+								add_tile(i, j, room_bridge_scene)
 						else:
 							s_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
 					
 					if (room.w_bridges.has(Vector2i(i, j))):
 						if directions.has("W"):
-							add_tile(i, j, room_bridge_scene)
+							if (j == 0):
+								if has_crystal == CrystalE.RED:
+									var node = add_tile(i, j, open_room_door)
+									node.dir = "W"
+									ppos = node.position
+								else:
+									var node = add_tile(i, j, room_door)
+									dv[2] = node.position
+									node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("W"))
+							else:
+								add_tile(i, j, room_bridge_scene)
 						else:
 							w_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
 					
 					if (room.e_bridges.has(Vector2i(i, j))):
 						if directions.has("E"):
-							add_tile(i, j, room_bridge_scene)
+							if (j == Room.ROOM_SIZE - 1):
+								if has_crystal == CrystalE.RED:
+									var node = add_tile(i, j, open_room_door)
+									node.dir = "E"
+									ppos = node.position
+								else:
+									var node = add_tile(i, j, room_door)
+									dv[3] = node.position
+									node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("E"))
+							else:
+								add_tile(i, j, room_bridge_scene)
 						else:
 							e_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
 							
@@ -144,6 +197,10 @@ func spawn_mob(idk, ground_object: Area3D):
 func dog_death(crystal: Area3D, dog: Dog):
 	print("DOG DEATH SIGNAL")
 	mobs_to_spawn -= 1
+	var cadaver: Node3D = cadaver_scene.instantiate()
+	cadavers.append(cadaver)
+	add_child(cadaver)
+	cadaver.position = dog.position
 	dog.queue_free()
 	
 	if mobs_to_spawn > 0:
@@ -180,44 +237,54 @@ func next_level(idk, ground_object: Area3D):
 	#for block: Vector2i in room.n_bridges:
 		#block.visible = true
 	if (room.doors.has("N")):
+		if !directions_g.has("N"):
+			directions_g.append("N")
 		for block: Node3D in n_bruv_blocks:
 			if (block.position.x == 0):
 				var node = add_tile(block.position.x, block.position.z, room_door)
 				node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("N"))
-				print("N")
 			else: 	
 				add_tile(block.position.x, block.position.z, room_bridge_scene)
 			block.queue_free()
 	
 	if (room.doors.has("S")):
+		if !directions_g.has("S"):
+			directions_g.append("S")
 		for block: Node3D in s_bruv_blocks:
 			if (block.position.x == Room.ROOM_SIZE - 1):
 				var node = add_tile(block.position.x, block.position.z, room_door)
 				node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("S"))
-				print("S")
 			else:
 				add_tile(block.position.x, block.position.z, room_bridge_scene)
 			block.queue_free()
 	
 	if (room.doors.has("W")):
+		if !directions_g.has("W"):
+			directions_g.append("W")
 		for block: Node3D in w_bruv_blocks:
 			if (block.position.z == 0):
 				var node = add_tile(block.position.x, block.position.z, room_door)
 				node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("W"))
-				print("W")
 			else: 
 				add_tile(block.position.x, block.position.z, room_bridge_scene)
 			block.queue_free()
 			
 	if (room.doors.has("E")):
+		if !directions_g.has("E"):
+			directions_g.append("E")
 		for block: Node3D in e_bruv_blocks:
 			if (block.position.z == Room.ROOM_SIZE - 1):
 				var node = add_tile(block.position.x, block.position.z, room_door)
 				node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("E"))
-				print("E")
 			else: 
 				add_tile(block.position.x, block.position.z, room_bridge_scene)
 			block.queue_free()
+	
+	for child in get_children():
+		if (child.is_in_group("open_door_room")):
+			var node = add_tile(child.position.x, child.position.z, room_door)
+			node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind(child.dir))
+			child.queue_free()
 		
 
 func add_tile(x: int, z: int, tile: PackedScene) -> Node3D:
@@ -228,4 +295,29 @@ func add_tile(x: int, z: int, tile: PackedScene) -> Node3D:
 	return t
 
 func do_door(idk, d: String):
-	print(d)
+	#if get_parent().has_meta("prepare_to_go"):
+		#get_parent().prepare_to_go()
+	var cad_pos = []
+	for cadaver in cadavers:
+		cad_pos.append(cadaver.position)
+	print(directions_g)
+	print({"cadavers": cad_pos, "doors": directions_g})
+	SceneManager.save_scene_with_data(str(hash(room.coords)), {"cadavers": cad_pos, "doors": directions_g})
+	print("GOING ", d)
+	print("GOING ", d)
+	print("GOING ", d)
+	print("GOING ", d)
+	print("GOING ", d)
+	match d:
+		"N":
+			var vc: Array[String] = ["S"]
+			SceneManager.enter_room((room.coords + Vector2i(-1, 0)), "S", vc)
+		"S":
+			var vc: Array[String] = ["N"]
+			SceneManager.enter_room((room.coords + Vector2i(1, 0)), "N", vc)
+		"W":
+			var vc: Array[String] = ["E"]
+			SceneManager.enter_room((room.coords + Vector2i(0, -1)), "E", vc)
+		"E":
+			var vc: Array[String] = ["W"]
+			SceneManager.enter_room((room.coords + Vector2i(0, 1)), "W", vc)
