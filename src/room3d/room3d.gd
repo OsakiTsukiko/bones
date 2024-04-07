@@ -16,6 +16,8 @@ var yellow_crystal = load("res://assets/misc/crystal_yellow.png")
 var gray_crystal = load("res://assets/misc/crystal_gray.png")
 var blue_crystal = load("res://assets/misc/crystal_blue.png")
 
+var future = load("res://assets/misc/future.png")
+
 var dog_scene = load("res://src/dog_enemy/dog_enemy.tscn")
 
 var cadaver_scene: PackedScene = load("res://src/ground_object/cadaver.tscn")
@@ -45,6 +47,30 @@ var dv: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO
 
 func _init(p_room: Room, directions: Array[String], has_crystal: CrystalE = CrystalE.NONE) -> void:
 	room = p_room
+		# if the room is boss then create future device in the middle
+	
+	
+	if SceneManager.is_dungeon_future:
+		has_crystal = CrystalE.GRAY
+
+	if room.is_boss:
+		var future_instance = ground_object_scene.instantiate()
+		future_instance._init_instance(0.5, future, .2)
+		future_instance.position = Vector3(Room.ROOM_SIZE/2, 1.5, Room.ROOM_SIZE/2)
+		add_child(future_instance)
+		future_instance.body_entered.connect(SceneManager.change_to_future)
+		
+		has_crystal = Room3D.CrystalE.NONE
+	
+	if SceneManager.is_dungeon_future and room.coords == Vector2i(0, 0):
+		has_crystal = CrystalE.NONE
+		
+		var future_instance = ground_object_scene.instantiate()
+		future_instance._init_instance(0.5, future, .2)
+		future_instance.position = Vector3(Room.ROOM_SIZE/2, 1.5, Room.ROOM_SIZE/2)
+		add_child(future_instance)
+		future_instance.body_entered.connect(SceneManager.exit_dungeon)
+	
 	directions_g = directions.duplicate(true)
 	for i in range(Room.ROOM_SIZE):
 		for j in range(Room.ROOM_SIZE):
@@ -121,8 +147,11 @@ func _init(p_room: Room, directions: Array[String], has_crystal: CrystalE = Crys
 					add_tile(i, j, room_unstable_scene)
 				Room.Tiles.EMPTY:
 					add_tile(i, j, room_barrier_scene)
-			
-	mobs_remaining = randi()%3 + 1
+	
+	if SceneManager.is_dungeon_future:
+		mobs_remaining = 0
+	else:
+		mobs_remaining = randi()%3+1
 	print("MOBS: ", mobs_remaining)
 	
 	match has_crystal:
@@ -298,8 +327,9 @@ func do_door(idk, d: String):
 	#if get_parent().has_meta("prepare_to_go"):
 		#get_parent().prepare_to_go()
 	var cad_pos = []
-	for cadaver in cadavers:
-		cad_pos.append(cadaver.position)
+	if !SceneManager.is_dungeon_future:
+		for cadaver in cadavers:
+			cad_pos.append(cadaver.position)
 	print(directions_g)
 	print({"cadavers": cad_pos, "doors": directions_g})
 	SceneManager.save_scene_with_data(str(hash(room.coords)), {"cadavers": cad_pos, "doors": directions_g})
