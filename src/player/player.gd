@@ -55,6 +55,7 @@ func load_data(player_data: Dictionary):
 				is_time_up = true
 			"speed":
 				is_sped_up = true
+				
 				SPED_UP_MODIFIER = 1.5
 	
 	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Boots.visible = false

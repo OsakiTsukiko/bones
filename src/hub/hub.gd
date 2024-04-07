@@ -41,6 +41,7 @@ func _on_portal_body_entered(body):
 
 
 func ed_wrapper():
+	SoundManager.play_music("dungeon")
 	SceneManager.enter_dungeon()
 
 func _on_item_body_entered(body, item: String):

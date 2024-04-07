@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwtw41ow3ar67"]
+[gd_scene load_steps=7 format=3 uid="uid://bwtw41ow3ar67"]
 
 [ext_resource type="Script" path="res://src/sound_manager/sound_manager.gd" id="1_pin1k"]
 [ext_resource type="AudioStream" uid="uid://kv7ui607rglr" path="res://assets/sound/interface3.wav" id="2_qgp0t"]
 [ext_resource type="AudioStream" uid="uid://cgq2dx5df12j1" path="res://assets/sound/snarl.ogg" id="3_yql0f"]
 [ext_resource type="AudioStream" uid="uid://dqlh52s01gc0d" path="res://assets/sound/bark.wav" id="4_tx38q"]
+[ext_resource type="AudioStream" uid="uid://bnyu4nv23c61r" path="res://assets/music/Cave1_SOI.mp3" id="5_jaur7"]
+[ext_resource type="AudioStream" uid="uid://b8xgquc66cavf" path="res://assets/music/Battle Theme II v1.2.wav" id="6_njy8i"]
 
 [node name="SoundManager" type="Node"]
 script = ExtResource("1_pin1k")
 
-[node name="InterfaceSound" type="AudioStreamPlayer2D" parent="."]
+[node name="InterfaceSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_qgp0t")
 
 [node name="SnarlSound" type="AudioStreamPlayer2D" parent="."]
@@ -16,3 +18,9 @@ stream = ExtResource("3_yql0f")
 
 [node name="BarkSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_tx38q")
+
+[node name="MusicTitle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_jaur7")
+
+[node name="MusicDungeon" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_njy8i")
