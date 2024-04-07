@@ -17,6 +17,8 @@ var scene_data: Dictionary = {
 	
 }
 
+var player_looking_direction: Vector3;
+
 var player_data: Dictionary = {
 	"iih": "sword",
 	"items": [],

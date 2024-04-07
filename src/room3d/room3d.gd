@@ -293,6 +293,8 @@ func add_tile(x: int, z: int, tile: PackedScene) -> Node3D:
 	return t
 
 func do_door(idk, d: String):
+	#if get_parent().has_meta("prepare_to_go"):
+		#get_parent().prepare_to_go()
 	var cad_pos = []
 	for cadaver in cadavers:
 		cad_pos.append(cadaver.position)

@@ -11,12 +11,19 @@ func _ready():
 	SceneManager.set_player(player)
 	player.position = Vector3(14, 1, 14)
 
+func prepare_to_go():
+	SceneManager.player_looking_direction = player.rotation
+	print(SceneManager.player_looking_direction)
+	print("PREPARE TO GOOOOOOOOOOOOOOOOOOOOOOOO")
+
+func _process(delta: float) -> void:
+	SceneManager.player_looking_direction = player.rotation
+
 func post_init(p_r3d: Room3D, player_rotation: Vector3):
 	r3d = p_r3d
 	if r3d.ppos != Vector3(-1, -1, -1):
 		player.position = r3d.ppos
 		player.position.y = 1
-		player.rotation = player_rotation
 	else:
 		match r3d.from:
 			"N":
@@ -35,6 +42,10 @@ func post_init(p_r3d: Room3D, player_rotation: Vector3):
 				player.position = r3d.dv[3]
 				player.position.y = 1
 				player.position.z = Room.ROOM_SIZE - 2
+	
+	print(SceneManager.player_looking_direction)
+	player.rotation = SceneManager.player_looking_direction
+	player.target_rotation = SceneManager.player_looking_direction.y
 	
 	match r3d.from:
 		"N":
