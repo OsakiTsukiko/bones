@@ -56,6 +56,7 @@ func load_data(player_data: Dictionary):
 				is_time_up = true
 			"speed":
 				is_sped_up = true
+				
 				SPED_UP_MODIFIER = 1.5
 	
 	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Boots.visible = false
@@ -99,6 +100,7 @@ func _ready() -> void:
 func take_damage(value: int):
 	# print("DAMAGE: ", value)
 	if (item_in_hand == iih.SHIELD && Input.is_action_pressed("attack")):
+		SoundManager.play_sound("player_block")
 		return
 	# print(lives)
 	if extra_heart:
@@ -107,7 +109,7 @@ func take_damage(value: int):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = false
 		return
 	lives -= 1
-	
+	SoundManager.play_sound("player_hurt")
 	$Camera3D.camera_shake()
 	if (lives == 0):
 		if Input.get_connected_joypads().size():
@@ -153,7 +155,7 @@ func _physics_process(delta):
 			attack_timer.start()
 			shield.visible = false 
 			SPEED = 120
-			
+			SoundManager.play_sound("player_attack")
 			var hit = false
 			for node in atk_area.get_overlapping_bodies():
 				print(node)

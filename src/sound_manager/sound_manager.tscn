@@ -1,18 +1,77 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwtw41ow3ar67"]
+[gd_scene load_steps=16 format=3 uid="uid://bwtw41ow3ar67"]
 
 [ext_resource type="Script" path="res://src/sound_manager/sound_manager.gd" id="1_pin1k"]
 [ext_resource type="AudioStream" uid="uid://kv7ui607rglr" path="res://assets/sound/interface3.wav" id="2_qgp0t"]
 [ext_resource type="AudioStream" uid="uid://cgq2dx5df12j1" path="res://assets/sound/snarl.ogg" id="3_yql0f"]
 [ext_resource type="AudioStream" uid="uid://dqlh52s01gc0d" path="res://assets/sound/bark.wav" id="4_tx38q"]
+[ext_resource type="AudioStream" uid="uid://bnyu4nv23c61r" path="res://assets/music/Cave1_SOI.mp3" id="5_jaur7"]
+[ext_resource type="AudioStream" uid="uid://b8xgquc66cavf" path="res://assets/music/Battle Theme II v1.2.wav" id="6_njy8i"]
+[ext_resource type="AudioStream" uid="uid://ssiuupq3ngm8" path="res://assets/sound/activate_crystal.ogg" id="7_0s5y4"]
+[ext_resource type="AudioStream" uid="uid://d2lxmtupg8gv1" path="res://assets/sound/grunt_01.ogg" id="7_hyjp5"]
+[ext_resource type="AudioStream" uid="uid://ckmcc8khva7f" path="res://assets/sound/hjm-coindrop_v1.wav" id="7_tk7eo"]
+[ext_resource type="AudioStream" uid="uid://bhbnl3lp777uc" path="res://assets/sound/craft.ogg" id="8_gdxpu"]
+[ext_resource type="AudioStream" uid="uid://blfdpbm0rqhfw" path="res://assets/sound/deactivate_crystal.ogg" id="8_n2owa"]
+[ext_resource type="AudioStream" uid="uid://de8xt506petkn" path="res://assets/sound/dog_hurt.ogg" id="12_c163e"]
+[ext_resource type="AudioStream" uid="uid://c8i8vldadp0b2" path="res://assets/sound/block.ogg" id="13_fa7h1"]
+[ext_resource type="AudioStream" uid="uid://skil4epqdnmn" path="res://assets/sound/player_hurt.wav" id="14_02g0b"]
+[ext_resource type="AudioStream" uid="uid://bj8obdjgu8grc" path="res://assets/sound/swipe.wav" id="15_4sw27"]
 
 [node name="SoundManager" type="Node"]
 script = ExtResource("1_pin1k")
 
-[node name="InterfaceSound" type="AudioStreamPlayer2D" parent="."]
+[node name="InterfaceSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_qgp0t")
+volume_db = -10.0
 
-[node name="SnarlSound" type="AudioStreamPlayer2D" parent="."]
+[node name="MusicTitle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_jaur7")
+volume_db = -20.0
+
+[node name="MusicDungeon" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_njy8i")
+volume_db = -10.0
+
+[node name="CoinsSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_tk7eo")
+volume_db = 10.0
+
+[node name="CraftSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_gdxpu")
+volume_db = 10.0
+
+[node name="Crystal" type="Node" parent="."]
+
+[node name="CrystalActivateSound" type="AudioStreamPlayer2D" parent="Crystal"]
+stream = ExtResource("7_0s5y4")
+volume_db = -5.0
+
+[node name="CrystalDeactivateSound" type="AudioStreamPlayer2D" parent="Crystal"]
+stream = ExtResource("8_n2owa")
+volume_db = -5.0
+
+[node name="Dog" type="Node" parent="."]
+
+[node name="SnarlSound" type="AudioStreamPlayer2D" parent="Dog"]
 stream = ExtResource("3_yql0f")
 
-[node name="BarkSound" type="AudioStreamPlayer2D" parent="."]
+[node name="BarkSound" type="AudioStreamPlayer2D" parent="Dog"]
 stream = ExtResource("4_tx38q")
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="Dog"]
+stream = ExtResource("7_hyjp5")
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="Dog"]
+stream = ExtResource("12_c163e")
+
+[node name="Player" type="Node" parent="."]
+
+[node name="BlockSound" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("13_fa7h1")
+volume_db = -5.0
+
+[node name="PlayerHurtSound" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("14_02g0b")
+
+[node name="SwipeSound" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("15_4sw27")
+volume_db = 3.0
