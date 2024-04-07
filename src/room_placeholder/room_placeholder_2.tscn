@@ -1,28 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b3dt3pjoxbnqk"]
+[gd_scene load_steps=3 format=3 uid="uid://b3dt3pjoxbnqk"]
 
 [ext_resource type="Script" path="res://src/room_placeholder/room_placeholder_2.gd" id="1_da4kt"]
-
-[sub_resource type="Gradient" id="Gradient_6dy53"]
-offsets = PackedFloat32Array(0.00847458, 0.508475, 0.711864, 1)
-colors = PackedColorArray(3.85046e-07, 0.587743, 0.42345, 1, 0.048096, 0.271575, 0.211665, 1, 0, 0, 0, 1, 0.0556347, 2.42534e-08, 6.01634e-09, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_oreec"]
-gradient = SubResource("Gradient_6dy53")
-fill_from = Vector2(0.516484, 0)
-fill_to = Vector2(0.532967, 1)
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_orqgi"]
-panorama = SubResource("GradientTexture2D_oreec")
-
-[sub_resource type="Sky" id="Sky_giq5q"]
-sky_material = SubResource("PanoramaSkyMaterial_orqgi")
-
-[sub_resource type="Environment" id="Environment_gnyfh"]
-background_mode = 2
-sky = SubResource("Sky_giq5q")
+[ext_resource type="Environment" uid="uid://yrvfcu5mnb08" path="res://src/room_placeholder/room_placeholder_2_env.tres" id="2_c7qen"]
 
 [node name="RoomPlaceholder" type="Node3D"]
 script = ExtResource("1_da4kt")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_gnyfh")
+environment = ExtResource("2_c7qen")

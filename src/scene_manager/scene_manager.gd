@@ -7,6 +7,8 @@ var ground_obj: PackedScene = load("res://src/ground_object/ground_object.tscn")
 
 var red_crystal = load("res://assets/misc/crystal_red.png")
 
+var hub_scene = load("res://src/hub/hub.tscn")
+
 var player: Node3D
 
 var parent_node: Node3D
@@ -88,6 +90,8 @@ func enter_room(coords: Vector2i, from: String, darr: Array[String] = [], player
 		child.queue_free()
 	var rmplh = room_placeholder.instantiate()
 	parent_node.add_child(rmplh)
+	if (is_dungeon_future):
+		rmplh.get_node("WorldEnvironment").environment = load("res://src/room_placeholder/room_placeholder_2_env.tres")
 	rmplh.add_child(rrm_node)
 	
 	if (scene_data.has(str(hash(coords)))):
@@ -117,4 +121,11 @@ func change_to_future(body):
 	if body.has_method("is_player"):
 		is_dungeon_future = true
 		print("WELCOME TO THE FUTURE")
+		parent_node.get_node("RoomPlaceholder").get_node("WorldEnvironment").environment = load("res://src/room_placeholder/room_placeholder_2_env.tres")
 	
+
+func exit_dungeon(bruv):
+	SoundManager.play_sound("interface");
+	scene_data = {}
+	is_dungeon_future = false
+	get_tree().call_deferred("change_scene_to_packed", hub_scene)
