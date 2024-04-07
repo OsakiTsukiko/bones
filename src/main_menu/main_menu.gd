@@ -8,7 +8,9 @@ func _physics_process(delta):
 	# TODO: Add the rest of the buttons
 		
 func _on_button_start_pressed():
+	TransitionScreen.transition_in()
 	SoundManager.play_sound("interface");
+	await TransitionScreen.done_fading
 	get_tree().change_scene_to_packed(hub_scene)
 
 
