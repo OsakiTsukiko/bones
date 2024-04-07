@@ -26,7 +26,7 @@ tracks/0/path = NodePath("ColorRect:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0.0980392, 0.0352941, 0.027451, 1), Color(0.0980392, 0.0352941, 0.027451, 0)]
@@ -41,7 +41,7 @@ tracks/0/path = NodePath("ColorRect:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0.0980392, 0.0352941, 0.027451, 0), Color(0.0980392, 0.0352941, 0.027451, 1)]
@@ -55,7 +55,6 @@ _data = {
 }
 
 [node name="TransitionScreen" type="CanvasLayer"]
-visible = false
 script = ExtResource("1_ve2u4")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -64,6 +63,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.0980392, 0.0352941, 0.027451, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

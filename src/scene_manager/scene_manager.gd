@@ -9,11 +9,16 @@ var ground_obj: PackedScene = load("res://src/ground_object/ground_object.tscn")
 
 var red_crystal = load("res://assets/misc/crystal_red.png")
 
+var hub_scene = load("res://src/hub/hub.tscn")
+
 var player: Node3D
 
 var parent_node: Node3D
 
 var cadaver_scene: PackedScene = load("res://src/ground_object/cadaver.tscn")
+
+var bone_1 = load("res://assets/bones/bone_1.png")
+var bone_2 = load("res://assets/bones/bone_2.png")
 
 var scene_data: Dictionary = {
 	
@@ -31,6 +36,7 @@ var player_data: Dictionary = {
 }
 
 var dungeon := Dungeon.new(Vector2i(0, 0), ROOM_COUNT)
+var is_dungeon_future := false
 
 func save_scene_with_data(id: String, data: Dictionary):
 	scene_data[id] = data
@@ -53,6 +59,8 @@ func get_player_data():
 	return player_data
 
 func pre_enter_dungeon():
+	TransitionScreen.transition_in()
+	await TransitionScreen.done_fading
 	get_tree().change_scene_to_packed(rnode_scene)
 
 func rn_init(n: Node3D):
@@ -63,7 +71,7 @@ func enter_dungeon():
 	dungeon.generate_dungeon()
 	var room_zero = dungeon.rooms[hash(Vector2i(0, 0))]
 	var rm_node = Room3D.new(room_zero, [], Room3D.CrystalE.RED)
-	
+
 	for child in parent_node.get_children():
 		child.queue_free()
 	var rmplh = room_placeholder.instantiate()
@@ -71,6 +79,7 @@ func enter_dungeon():
 	rmplh.add_child(rm_node)
 
 func enter_room(coords: Vector2i, from: String, darr: Array[String] = [], player_rotation: Vector3 = Vector3.ZERO):
+	TransitionScreen.transition_in()
 	var new_room: Room = dungeon.rooms[hash(coords)]
 	var new_crystal := Room3D.CrystalE.RED
 	if (scene_data.has(str(hash(coords)))):
@@ -78,20 +87,32 @@ func enter_room(coords: Vector2i, from: String, darr: Array[String] = [], player
 		darr = scene_data[str(hash(coords))]["doors"]
 		print(darr)
 		new_crystal = Room3D.CrystalE.GRAY
+	if is_dungeon_future:
+		new_crystal = Room3D.CrystalE.GRAY
 	var rrm_node = Room3D.new(new_room, darr, new_crystal)
 	rrm_node.from = from 
+	await TransitionScreen.done_fading
 	for child in parent_node.get_children():
 		child.queue_free()
 	var rmplh = room_placeholder.instantiate()
 	parent_node.add_child(rmplh)
+	if (is_dungeon_future):
+		rmplh.get_node("WorldEnvironment").environment = load("res://src/room_placeholder/room_placeholder_2_env.tres")
 	rmplh.add_child(rrm_node)
 	
 	if (scene_data.has(str(hash(coords)))):
 		for cadaver in scene_data[str(hash(coords))]["cadavers"]:
-			var ncadaver: Node3D = cadaver_scene.instantiate()
+			var ncadaver: Area3D = cadaver_scene.instantiate()
 			rrm_node.cadavers.append(ncadaver)
 			rrm_node.add_child(ncadaver)
 			ncadaver.position = cadaver
+			if is_dungeon_future:
+				ncadaver.body_entered.connect(Callable(self, "cadaver_collected").bind(ncadaver))
+				if (randi()%2==0):
+					ncadaver.get_node("Sprite3D").texture = bone_1
+				else:
+					ncadaver.get_node("Sprite3D").texture = bone_2
+		#scene_data[str(hash(coords))]["cadavers"] = []
 	
 	rmplh.post_init(rrm_node, player_rotation)
 
@@ -108,3 +129,23 @@ func reset():
 		"donated_fossils": 0
 	}
 	dungeon = Dungeon.new(Vector2i(0, 0), ROOM_COUNT)
+
+func cadaver_collected(body, ncadaver: Node3D):
+	if body.has_method("is_player"):
+		player_data["player_fossils"] += 1
+		player.load_data(player_data)
+		print(player_data["player_fossils"])
+		ncadaver.queue_free()
+
+func change_to_future(body):
+	if body.has_method("is_player"):
+		is_dungeon_future = true
+		print("WELCOME TO THE FUTURE")
+		parent_node.get_node("RoomPlaceholder").get_node("WorldEnvironment").environment = load("res://src/room_placeholder/room_placeholder_2_env.tres")
+	
+
+func exit_dungeon(bruv):
+	SoundManager.play_sound("interface");
+	scene_data = {}
+	is_dungeon_future = false
+	get_tree().call_deferred("change_scene_to_packed", hub_scene)

@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 SoundManager="*res://src/sound_manager/sound_manager.tscn"
+TransitionScreen="*res://src/scene_manager/transition_screen.tscn"
 RandStuff="*res://src/rand_stuff.gd"
 TransitionScreen="*res://src/scene_manager/transition_screen.tscn"
 SceneManager="*res://src/scene_manager/scene_manager.tscn"
