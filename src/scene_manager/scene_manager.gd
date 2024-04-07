@@ -28,7 +28,8 @@ var player_data: Dictionary = {
 	"donated_fossils": 0
 }
 
-var dungeon := Dungeon.new(Vector2i(0, 0), 15)
+var dungeon := Dungeon.new(Vector2i(0, 0), 2)
+var is_dungeon_future := false
 
 func save_scene_with_data(id: String, data: Dictionary):
 	scene_data[id] = data
@@ -76,6 +77,8 @@ func enter_room(coords: Vector2i, from: String, darr: Array[String] = [], player
 		darr = scene_data[str(hash(coords))]["doors"]
 		print(darr)
 		new_crystal = Room3D.CrystalE.GRAY
+	if is_dungeon_future:
+		new_crystal = Room3D.CrystalE.GRAY
 	var rrm_node = Room3D.new(new_room, darr, new_crystal)
 	rrm_node.from = from 
 	for child in parent_node.get_children():
@@ -86,9 +89,23 @@ func enter_room(coords: Vector2i, from: String, darr: Array[String] = [], player
 	
 	if (scene_data.has(str(hash(coords)))):
 		for cadaver in scene_data[str(hash(coords))]["cadavers"]:
-			var ncadaver: Node3D = cadaver_scene.instantiate()
+			var ncadaver: Area3D = cadaver_scene.instantiate()
 			rrm_node.cadavers.append(ncadaver)
 			rrm_node.add_child(ncadaver)
 			ncadaver.position = cadaver
+			if is_dungeon_future:
+				ncadaver.body_entered.connect(cadaver_collected)
 	
 	rmplh.post_init(rrm_node, player_rotation)
+
+func cadaver_collected(body):
+	if body.has_method("is_player"):
+		player_data["player_fossils"] += 1
+		player.load_data(player_data)
+		print(player_data["player_fossils"])
+
+func change_to_future(body):
+	if body.has_method("is_player"):
+		is_dungeon_future = true
+		print("WELCOME TO THE FUTURE")
+	

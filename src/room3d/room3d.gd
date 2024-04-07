@@ -47,119 +47,189 @@ var dv: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO
 
 func _init(p_room: Room, directions: Array[String], has_crystal: CrystalE = CrystalE.NONE) -> void:
 	room = p_room
-	if room.is_boss:
-		has_crystal = CrystalE.NONE
-	directions_g = directions.duplicate(true)
-	for i in range(Room.ROOM_SIZE):
-		for j in range(Room.ROOM_SIZE):
-			match room.layout[i][j]:
-				Room.Tiles.GROUND:
-					add_tile(i, j, room_block_scene)
-				Room.Tiles.BRIDGE:
-					if room.n_bridges.has(Vector2i(i, j)):
-						if directions.has("N"):
-							if (i == 0):
-								if has_crystal == CrystalE.RED:
-									var node = add_tile(i, j, open_room_door)
-									node.dir = "N"
-									ppos = node.position
-								else:
+	if SceneManager.is_dungeon_future:
+		# if the room is boss then create future device in the middle
+		if room.is_boss:
+			var future_instance = ground_object_scene.instantiate()
+			future_instance._init_instance(0.5, future, .2)
+			future_instance.position = Vector3(Room.ROOM_SIZE/2, 1.5, Room.ROOM_SIZE/2)
+		
+		has_crystal = Room3D.CrystalE.NONE
+		
+		for i in range(Room.ROOM_SIZE):
+			for j in range(Room.ROOM_SIZE):
+				match room.layout[i][j]:
+					Room.Tiles.GROUND:
+						add_tile(i, j, room_block_scene)
+					Room.Tiles.BRIDGE:
+						if room.n_bridges.has(Vector2i(i, j)):
+							if directions.has("N"):
+								if (i == 0):
 									var node = add_tile(i, j, room_door)
 									dv[0] = node.position
 									node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("N"))
-									
-							else:
-								add_tile(i, j, room_bridge_scene)
-						else:
-							n_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
-					
-					if (room.s_bridges.has(Vector2i(i, j))):
-						if directions.has("S"):
-							if (i == Room.ROOM_SIZE - 1):
-								if has_crystal == CrystalE.RED:
-									var node = add_tile(i, j, open_room_door)
-									node.dir = "S"
-									ppos = node.position
 								else:
+									add_tile(i, j, room_bridge_scene)
+							else:
+								n_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
+						
+						if (room.s_bridges.has(Vector2i(i, j))):
+							if directions.has("S"):
+								if (i == Room.ROOM_SIZE - 1):
 									var node = add_tile(i, j, room_door)
 									dv[1] = node.position
 									node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("S"))
-							else:
-								add_tile(i, j, room_bridge_scene)
-						else:
-							s_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
-					
-					if (room.w_bridges.has(Vector2i(i, j))):
-						if directions.has("W"):
-							if (j == 0):
-								if has_crystal == CrystalE.RED:
-									var node = add_tile(i, j, open_room_door)
-									node.dir = "W"
-									ppos = node.position
 								else:
+									add_tile(i, j, room_bridge_scene)
+							else:
+								s_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
+						
+						if (room.w_bridges.has(Vector2i(i, j))):
+							if directions.has("W"):
+								if (j == 0):
 									var node = add_tile(i, j, room_door)
 									dv[2] = node.position
 									node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("W"))
-							else:
-								add_tile(i, j, room_bridge_scene)
-						else:
-							w_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
-					
-					if (room.e_bridges.has(Vector2i(i, j))):
-						if directions.has("E"):
-							if (j == Room.ROOM_SIZE - 1):
-								if has_crystal == CrystalE.RED:
-									var node = add_tile(i, j, open_room_door)
-									node.dir = "E"
-									ppos = node.position
 								else:
+									add_tile(i, j, room_bridge_scene)
+							else:
+								w_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
+						
+						if (room.e_bridges.has(Vector2i(i, j))):
+							if directions.has("E"):
+								if (j == Room.ROOM_SIZE - 1):
 									var node = add_tile(i, j, room_door)
 									dv[3] = node.position
 									node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("E"))
+								else:
+									add_tile(i, j, room_bridge_scene)
 							else:
-								add_tile(i, j, room_bridge_scene)
-						else:
-							e_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
-							
-				Room.Tiles.UNSTABLE:
-					add_tile(i, j, room_unstable_scene)
-				Room.Tiles.EMPTY:
-					add_tile(i, j, room_barrier_scene)
+								e_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
+								
+					Room.Tiles.UNSTABLE:
+						add_tile(i, j, room_barrier_scene)
+					Room.Tiles.EMPTY:
+						add_tile(i, j, room_barrier_scene)
+		
+		print("NO MOBS IN FUTURE")
+		
+
+	else:
+		if room.is_boss:
+			has_crystal = CrystalE.NONE
+		directions_g = directions.duplicate(true)
+		for i in range(Room.ROOM_SIZE):
+			for j in range(Room.ROOM_SIZE):
+				match room.layout[i][j]:
+					Room.Tiles.GROUND:
+						add_tile(i, j, room_block_scene)
+					Room.Tiles.BRIDGE:
+						if room.n_bridges.has(Vector2i(i, j)):
+							if directions.has("N"):
+								if (i == 0):
+									if has_crystal == CrystalE.RED:
+										var node = add_tile(i, j, open_room_door)
+										node.dir = "N"
+										ppos = node.position
+									else:
+										var node = add_tile(i, j, room_door)
+										dv[0] = node.position
+										node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("N"))
+										
+								else:
+									add_tile(i, j, room_bridge_scene)
+							else:
+								n_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
+						
+						if (room.s_bridges.has(Vector2i(i, j))):
+							if directions.has("S"):
+								if (i == Room.ROOM_SIZE - 1):
+									if has_crystal == CrystalE.RED:
+										var node = add_tile(i, j, open_room_door)
+										node.dir = "S"
+										ppos = node.position
+									else:
+										var node = add_tile(i, j, room_door)
+										dv[1] = node.position
+										node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("S"))
+								else:
+									add_tile(i, j, room_bridge_scene)
+							else:
+								s_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
+						
+						if (room.w_bridges.has(Vector2i(i, j))):
+							if directions.has("W"):
+								if (j == 0):
+									if has_crystal == CrystalE.RED:
+										var node = add_tile(i, j, open_room_door)
+										node.dir = "W"
+										ppos = node.position
+									else:
+										var node = add_tile(i, j, room_door)
+										dv[2] = node.position
+										node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("W"))
+								else:
+									add_tile(i, j, room_bridge_scene)
+							else:
+								w_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
+						
+						if (room.e_bridges.has(Vector2i(i, j))):
+							if directions.has("E"):
+								if (j == Room.ROOM_SIZE - 1):
+									if has_crystal == CrystalE.RED:
+										var node = add_tile(i, j, open_room_door)
+										node.dir = "E"
+										ppos = node.position
+									else:
+										var node = add_tile(i, j, room_door)
+										dv[3] = node.position
+										node.get_node("DOOR").connect("body_entered", Callable(self, "do_door").bind("E"))
+								else:
+									add_tile(i, j, room_bridge_scene)
+							else:
+								e_bruv_blocks.append(add_tile(i, j, room_barrier_scene))
+								
+					Room.Tiles.UNSTABLE:
+						add_tile(i, j, room_unstable_scene)
+					Room.Tiles.EMPTY:
+						add_tile(i, j, room_barrier_scene)
+				
+		mobs_remaining = randi()%3 + 1
+		print("MOBS: ", mobs_remaining)
+		
+		match has_crystal:
+			CrystalE.RED:
+				var crystal = ground_object_scene.instantiate()
+				crystal._init_instance(0.5, red_crystal, .2)
+				crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
+				add_child(crystal)
+				crystal.connect("body_entered", Callable(self, "spawn_mob").bind(crystal))
 			
-	mobs_remaining = randi()%3 + 1
-	print("MOBS: ", mobs_remaining)
-	
-	match has_crystal:
-		CrystalE.RED:
-			var crystal = ground_object_scene.instantiate()
-			crystal._init_instance(0.5, red_crystal, .2)
-			crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
-			add_child(crystal)
-			crystal.connect("body_entered", Callable(self, "spawn_mob").bind(crystal))
+			CrystalE.YELLOW:
+				var crystal = ground_object_scene.instantiate()
+				crystal._init_instance(0.5, yellow_crystal, .2)
+				crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
+				add_child(crystal)
+			
+			CrystalE.BLUE:
+				var crystal = ground_object_scene.instantiate()
+				crystal._init_instance(0.5, blue_crystal, .2)
+				crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
+				add_child(crystal)
+			
+			CrystalE.GRAY:
+				var crystal = ground_object_scene.instantiate()
+				crystal._init_instance(0.5, gray_crystal, .2)
+				crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
+				add_child(crystal)
 		
-		CrystalE.YELLOW:
-			var crystal = ground_object_scene.instantiate()
-			crystal._init_instance(0.5, yellow_crystal, .2)
-			crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
-			add_child(crystal)
-		
-		CrystalE.BLUE:
-			var crystal = ground_object_scene.instantiate()
-			crystal._init_instance(0.5, blue_crystal, .2)
-			crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
-			add_child(crystal)
-		
-		CrystalE.GRAY:
-			var crystal = ground_object_scene.instantiate()
-			crystal._init_instance(0.5, gray_crystal, .2)
-			crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
-			add_child(crystal)
-		
-	if room.is_boss:
-		var future_instance = ground_object_scene.instantiate()
-		future_instance._init_instance(0.5, future, .2)
-		future_instance.position = Vector3(Room.ROOM_SIZE/2, 1.5, Room.ROOM_SIZE/2)
-		add_child(future_instance)
+		# if the room is boss then create future device in the middle
+		if room.is_boss:
+			var future_instance = ground_object_scene.instantiate()
+			future_instance._init_instance(0.5, future, .2)
+			future_instance.position = Vector3(Room.ROOM_SIZE/2, 1.5, Room.ROOM_SIZE/2)
+			add_child(future_instance)
+			future_instance.body_entered.connect(SceneManager.change_to_future)
 
 var mobs_to_spawn: int
 func spawn_mob(idk, ground_object: Area3D):

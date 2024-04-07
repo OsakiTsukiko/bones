@@ -219,7 +219,7 @@ func _exit_tree():
 		SceneManager.player_data["iih"] = "sword"
 	if item_in_hand == iih.SHIELD:
 		SceneManager.player_data["iih"] = "shield"
-	
+
 
 func is_player():
 	return true
