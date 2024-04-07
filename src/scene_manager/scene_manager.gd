@@ -1,6 +1,6 @@
 extends Node
 
-const ROOM_COUNT = 15
+const ROOM_COUNT = 2
 
 var room_placeholder: PackedScene = preload("res://src/room_placeholder/room_placeholder.tscn")
 var rnode_scene: PackedScene = preload("res://r_node.tscn")
@@ -31,7 +31,7 @@ var player_data: Dictionary = {
 	"items": [],
 	"lives": 3,
 	"player_money": 10,
-	"player_fossils": 100,
+	"player_fossils": 0,
 	"donated_fossils": 0
 }
 
@@ -146,6 +146,8 @@ func change_to_future(body):
 
 func exit_dungeon(bruv):
 	SoundManager.play_sound("interface");
+	player_data["items"] = []
+	player.load_data(player_data)
 	scene_data = {}
 	is_dungeon_future = false
 	get_tree().call_deferred("change_scene_to_packed", hub_scene)

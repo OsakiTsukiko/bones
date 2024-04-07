@@ -51,14 +51,15 @@ func _on_item_body_entered(body, item: String):
 		if !SceneManager.player_data["items"].has(item):
 			# buy item
 			if (item == "heart" && SceneManager.player_data["player_money"] >= 5):
-				SoundManager.play_sound("coins")
-				SceneManager.player_data["player_money"] -= 5;
-				SceneManager.player_data["items"].append(item)
-			if (item == "speed" && SceneManager.player_data["player_money"] >= 4):
+				if !SceneManager.player_data["items"].has("heart_used"):
+					SoundManager.play_sound("coins")
+					SceneManager.player_data["player_money"] -= 5;
+					SceneManager.player_data["items"].append(item)
+			if (item == "speed" && SceneManager.player_data["player_money"] >= 7):
 				SoundManager.play_sound("coins")
 				SceneManager.player_data["player_money"] -= 4;
 				SceneManager.player_data["items"].append(item)
-			if (item == "time" && SceneManager.player_data["player_money"] >= 7):
+			if (item == "time" && SceneManager.player_data["player_money"] >= 3):
 				SoundManager.play_sound("coins")
 				SceneManager.player_data["player_money"] -= 7;
 				SceneManager.player_data["items"].append(item)
@@ -87,6 +88,7 @@ func _on_fossil_entered(body):
 		if (SceneManager.player_data["player_fossils"] > 0):
 			SoundManager.play_sound("craft")
 		SceneManager.player_data["donated_fossils"] += SceneManager.player_data["player_fossils"];
+		SceneManager.player_data["player_money"] += SceneManager.player_data["player_fossils"];
 		SceneManager.player_data["player_fossils"] = 0
 		$Player.load_data(SceneManager.player_data)
 		load_fossil()

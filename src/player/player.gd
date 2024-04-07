@@ -53,7 +53,12 @@ func load_data(player_data: Dictionary):
 	for item in player_data["items"]:
 		match item:
 			"heart":
-				extra_heart = true
+				if lives == 3:
+					extra_heart = true
+				else:
+					lives += 1
+				player_data["items"].erase("heart")
+				player_data["items"].append("heart_used")
 			"time":
 				is_time_up = true
 			"speed":
