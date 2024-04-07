@@ -35,6 +35,8 @@ enum iih {
 }
 
 var item_in_hand 
+var menu_scene: PackedScene = preload("res://src/main_menu/main_menu.tscn")
+var death_scene: PackedScene = preload("res://src/death_scene/death_scene.tscn")
 
 func load_data(player_data: Dictionary):
 	#print(player_data)
@@ -117,10 +119,11 @@ func take_damage(value: int):
 	SceneManager.player_data["lives"] -= 1
 	SoundManager.play_sound("player_hurt")
 	$Camera3D.camera_shake()
-	if (lives == 0):
+	if (lives <= 0):
 		if Input.get_connected_joypads().size():
-			Input.start_joy_vibration(Input.get_connected_joypads()[0], 0.5, 0.5, 0.5)
-		pass 
+			Input.start_joy_vibration(Input.get_connected_joypads()[0], 1, 1, 1)
+		get_tree().change_scene_to_packed(death_scene)
+		SceneManager.reset() 
 	if (lives == 1):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_empty
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_empty
@@ -157,6 +160,12 @@ func _physics_process(delta):
 	if Input.is_action_just_released("attack") && item_in_hand == iih.SHIELD:
 		shield.visible = false 
 		SPEED = 120
+	
+	if Input.is_action_just_released("exit_to_menu"):
+		get_tree().change_scene_to_packed(menu_scene)
+		
+	if Input.is_action_just_released("mute_sound"):
+		SoundManager.toggle_sfx();
 		
 	if Input.is_action_just_pressed("attack") && item_in_hand == iih.SWORD:
 		if (attack_timer.is_stopped()):
