@@ -32,7 +32,8 @@ var player_data: Dictionary = {
 	"lives": 3,
 	"player_money": 10,
 	"player_fossils": 0,
-	"donated_fossils": 0
+	"donated_fossils": 0,
+	"kill_time": 0.0
 }
 
 var dungeon := Dungeon.new(Vector2i(0, 0), ROOM_COUNT)
@@ -128,6 +129,7 @@ func reset():
 		"player_fossils": 100,
 		"donated_fossils": 0
 	}
+	is_dungeon_future = false
 	dungeon = Dungeon.new(Vector2i(0, 0), ROOM_COUNT)
 
 func cadaver_collected(body, ncadaver: Node3D):
@@ -142,6 +144,8 @@ func change_to_future(body):
 		is_dungeon_future = true
 		print("WELCOME TO THE FUTURE")
 		parent_node.get_node("RoomPlaceholder").get_node("WorldEnvironment").environment = load("res://src/room_placeholder/room_placeholder_2_env.tres")
+	
+	player.start_kill_timer()
 	
 
 func exit_dungeon(bruv):

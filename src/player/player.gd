@@ -11,6 +11,8 @@ extends CharacterBody3D
 
 @onready var atk_area = $LaAttack
 
+@onready var timer_label = $Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/HBoxContainer/TimerLabel
+
 var sword_texture = load("res://assets/misc/sword.png")
 var shield_texture = load("res://assets/misc/shield.png")
 var heart_filled = load("res://assets/ui/heart_filled.png")
@@ -41,6 +43,9 @@ var death_scene: PackedScene = preload("res://src/death_scene/death_scene.tscn")
 func load_data(player_data: Dictionary):
 	#print(player_data)
 	#print(player_data["iih"])
+	if SceneManager.is_dungeon_future:
+		$KillTimer.start(player_data["kill_time"])
+	
 	lives = player_data["lives"]
 	match player_data["iih"]:
 		"sword":
@@ -53,18 +58,15 @@ func load_data(player_data: Dictionary):
 	for item in player_data["items"]:
 		match item:
 			"heart":
-				if lives == 3:
-					extra_heart = true
-				else:
-					lives += 1
-				player_data["items"].erase("heart")
-				player_data["items"].append("heart_used")
+				lives += 1
 			"time":
 				is_time_up = true
 			"speed":
 				is_sped_up = true
 				
 				SPED_UP_MODIFIER = 1.5
+			"extra_heart":
+				extra_heart = true
 	
 	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Boots.visible = false
 	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = false
@@ -72,13 +74,13 @@ func load_data(player_data: Dictionary):
 	
 	if SceneManager.player_data["items"].has("speed"):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Boots.visible = true
-	if SceneManager.player_data["items"].has("heart"):
+	if SceneManager.player_data["items"].has("extra_heart"):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = true
 	if SceneManager.player_data["items"].has("time"):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Time.visible = true
 		
-	$Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer/RichTextLabel.text = str(player_fossils)
-	$Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer2/RichTextLabel.text = str(player_money)
+	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/RichTextLabel.text = str(player_fossils)
+	$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2/RichTextLabel.text = str(player_money)
 
 func _ready() -> void:
 	load_data(SceneManager.player_data)
@@ -127,8 +129,7 @@ func take_damage(value: int):
 	if (lives <= 0):
 		if Input.get_connected_joypads().size():
 			Input.start_joy_vibration(Input.get_connected_joypads()[0], 1, 1, 1)
-		get_tree().change_scene_to_packed(death_scene)
-		SceneManager.reset() 
+		kill_player()
 	if (lives == 1):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_empty
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_empty
@@ -150,6 +151,8 @@ func take_damage(value: int):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H3.texture = heart_empty
 
 func _physics_process(delta):
+	SceneManager.player_data["kill_time"] = $KillTimer.time_left
+	
 	if Input.is_action_just_pressed("swap") && !Input.is_action_pressed("attack"):
 		if (item_in_hand == iih.SWORD):
 			item_in_hand = iih.SHIELD
@@ -201,10 +204,10 @@ func _physics_process(delta):
 	rotation.y = lerp_angle(rotation.y, target_rotation, rotation_speed * delta)
 	
 	if Input.is_action_just_pressed("rot_l"):
-		target_rotation -= PI/4
+		target_rotation += PI/4
 	
 	if Input.is_action_just_pressed("rot_r"):
-		target_rotation += PI/4
+		target_rotation -= PI/4
 	
 	var direction = Vector3()
 	if Input.is_action_pressed("press_w"):
@@ -239,15 +242,28 @@ func _physics_process(delta):
 	direction = direction.normalized()
 	velocity = transform.basis * direction * delta * SPEED * SPED_UP_MODIFIER;
 	
+	update_kill_label()
+	
 	move_and_slide();
 
 func _exit_tree():
+	SceneManager.player_data["kill_time"] = $KillTimer.time_left
 	SceneManager.player_data["lives"] = lives
 	if item_in_hand == iih.SWORD:
 		SceneManager.player_data["iih"] = "sword"
 	if item_in_hand == iih.SHIELD:
 		SceneManager.player_data["iih"] = "shield"
 
+func start_kill_timer():
+	var kill_time = 60;
+	if (SceneManager.player_data["items"].has("time")):
+		kill_time += 60;
+	SceneManager.player_data["kill_time"] = kill_time
+	$KillTimer.start(kill_time)
+	
+
+func update_kill_label():
+	timer_label.text = str(int($KillTimer.time_left))
 
 func is_player():
 	return true
@@ -270,3 +286,10 @@ func _on_attack_body_entered(body: Node3D) -> void:
 func _on_attack_body_exited(body: Node3D) -> void:
 	if (body.has_method("stop_attack")):
 		body.stop_attack()
+
+func kill_player():
+	get_tree().change_scene_to_packed(death_scene)
+	SceneManager.reset() 
+
+func _on_kill_timer_timeout():
+	kill_player()

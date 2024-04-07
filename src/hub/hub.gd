@@ -51,17 +51,20 @@ func _on_item_body_entered(body, item: String):
 		if !SceneManager.player_data["items"].has(item):
 			# buy item
 			if (item == "heart" && SceneManager.player_data["player_money"] >= 5):
-				if !SceneManager.player_data["items"].has("heart_used"):
+				if !SceneManager.player_data["items"].has("extra_heart"):
+					if SceneManager.player_data["lives"] == 3:
+						SceneManager.player_data["items"].append("extra_heart")
+					else:
+						SceneManager.player_data["items"].append("heart")
 					SoundManager.play_sound("coins")
 					SceneManager.player_data["player_money"] -= 5;
-					SceneManager.player_data["items"].append(item)
 			if (item == "speed" && SceneManager.player_data["player_money"] >= 7):
 				SoundManager.play_sound("coins")
-				SceneManager.player_data["player_money"] -= 4;
+				SceneManager.player_data["player_money"] -= 7;
 				SceneManager.player_data["items"].append(item)
 			if (item == "time" && SceneManager.player_data["player_money"] >= 3):
 				SoundManager.play_sound("coins")
-				SceneManager.player_data["player_money"] -= 7;
+				SceneManager.player_data["player_money"] -= 3;
 				SceneManager.player_data["items"].append(item)
 			
 			$Player.load_data(SceneManager.player_data)

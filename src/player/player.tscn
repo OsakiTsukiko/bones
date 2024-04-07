@@ -417,15 +417,38 @@ texture = ExtResource("3_fgxpd")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="H1" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+texture = ExtResource("7_inkbf")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimerLabel" type="Label" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_2ab2v")
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="Spacer" type="Control" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 alignment = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 4
@@ -435,18 +458,18 @@ text = "0"
 fit_content = true
 autowrap_mode = 0
 
-[node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 texture = ExtResource("9_84l8x")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2"]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 4
@@ -456,7 +479,7 @@ text = "0"
 fit_content = true
 autowrap_mode = 0
 
-[node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 texture = ExtResource("10_78r1c")
@@ -561,7 +584,10 @@ collision_mask = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LaAttack"]
 shape = SubResource("CylinderShape3D_mkgcm")
 
+[node name="KillTimer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="LEFT" to="." method="_on_left_body_entered"]
 [connection signal="body_entered" from="RIGHT" to="." method="_on_right_body_entered"]
 [connection signal="body_entered" from="ATTACK" to="." method="_on_attack_body_entered"]
 [connection signal="body_exited" from="ATTACK" to="." method="_on_attack_body_exited"]
+[connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_timeout"]
