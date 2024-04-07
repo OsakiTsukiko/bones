@@ -1,4 +1,5 @@
-[gd_scene load_steps=48 format=3 uid="uid://ct7rww0ebf14s"]
+[gd_scene load_steps=49 format=3 uid="uid://ct7rww0ebf14s"]
+
 [ext_resource type="Texture2D" uid="uid://btrc0csfapjdb" path="res://assets/randy/randy.png" id="2_5i6hw"]
 [ext_resource type="Script" path="res://src/player/player.gd" id="2_65niv"]
 [ext_resource type="Texture2D" uid="uid://lux4c2eonle3" path="res://assets/randy/randy_running_1.png" id="2_u730u"]

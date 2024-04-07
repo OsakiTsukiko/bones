@@ -92,6 +92,11 @@ func _ready() -> void:
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_filled
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H3.texture = heart_filled
 		
+	if (lives < 1):
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_empty
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_empty
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H3.texture = heart_empty
+		
 	if (item_in_hand == iih.SWORD):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HAND/MarginContainer/TextureRect.texture = sword_texture
 	if (item_in_hand == iih.SHIELD):
@@ -109,6 +114,7 @@ func take_damage(value: int):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer2/Heart.visible = false
 		return
 	lives -= 1
+	SceneManager.player_data["lives"] -= 1
 	SoundManager.play_sound("player_hurt")
 	$Camera3D.camera_shake()
 	if (lives == 0):
@@ -129,6 +135,11 @@ func take_damage(value: int):
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_filled
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_filled
 		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H3.texture = heart_filled
+	
+	if (lives < 1):
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H1.texture = heart_empty
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H2.texture = heart_empty
+		$Camera3D/CanvasLayer/Control/VBoxContainer/HBoxContainer/HBoxContainer/H3.texture = heart_empty
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("swap") && !Input.is_action_pressed("attack"):

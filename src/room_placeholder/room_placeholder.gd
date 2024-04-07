@@ -10,6 +10,7 @@ func _ready():
 	add_child(player)
 	SceneManager.set_player(player)
 	player.position = Vector3(14, 1, 14)
+	player.load_data(SceneManager.player_data)
 
 func prepare_to_go():
 	SceneManager.player_looking_direction = player.rotation
