@@ -1,5 +1,7 @@
 extends Node
 
+const ROOM_COUNT = 15
+
 var room_placeholder: PackedScene = preload("res://src/room_placeholder/room_placeholder.tscn")
 var rnode_scene: PackedScene = preload("res://r_node.tscn")
 
@@ -33,7 +35,7 @@ var player_data: Dictionary = {
 	"donated_fossils": 0
 }
 
-var dungeon := Dungeon.new(Vector2i(0, 0), 2)
+var dungeon := Dungeon.new(Vector2i(0, 0), ROOM_COUNT)
 var is_dungeon_future := false
 
 func save_scene_with_data(id: String, data: Dictionary):
@@ -113,6 +115,20 @@ func enter_room(coords: Vector2i, from: String, darr: Array[String] = [], player
 		#scene_data[str(hash(coords))]["cadavers"] = []
 	
 	rmplh.post_init(rrm_node, player_rotation)
+
+func reset():
+	scene_data = {}
+	player_looking_direction = Vector3();
+
+	player_data = {
+		"iih": "sword",
+		"items": [],
+		"lives": 3,
+		"player_money": 10,
+		"player_fossils": 100,
+		"donated_fossils": 0
+	}
+	dungeon = Dungeon.new(Vector2i(0, 0), ROOM_COUNT)
 
 func cadaver_collected(body, ncadaver: Node3D):
 	if body.has_method("is_player"):
