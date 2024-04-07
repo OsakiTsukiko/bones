@@ -376,8 +376,9 @@ func do_door(idk, d: String):
 	#if get_parent().has_meta("prepare_to_go"):
 		#get_parent().prepare_to_go()
 	var cad_pos = []
-	for cadaver in cadavers:
-		cad_pos.append(cadaver.position)
+	if !SceneManager.is_dungeon_future:
+		for cadaver in cadavers:
+			cad_pos.append(cadaver.position)
 	print(directions_g)
 	print({"cadavers": cad_pos, "doors": directions_g})
 	SceneManager.save_scene_with_data(str(hash(room.coords)), {"cadavers": cad_pos, "doors": directions_g})

@@ -13,6 +13,9 @@ var parent_node: Node3D
 
 var cadaver_scene: PackedScene = load("res://src/ground_object/cadaver.tscn")
 
+var bone_1 = load("res://assets/bones/bone_1.png")
+var bone_2 = load("res://assets/bones/bone_2.png")
+
 var scene_data: Dictionary = {
 	
 }
@@ -94,15 +97,21 @@ func enter_room(coords: Vector2i, from: String, darr: Array[String] = [], player
 			rrm_node.add_child(ncadaver)
 			ncadaver.position = cadaver
 			if is_dungeon_future:
-				ncadaver.body_entered.connect(cadaver_collected)
+				ncadaver.body_entered.connect(Callable(self, "cadaver_collected").bind(ncadaver))
+				if (randi()%2==0):
+					ncadaver.get_node("Sprite3D").texture = bone_1
+				else:
+					ncadaver.get_node("Sprite3D").texture = bone_2
+		#scene_data[str(hash(coords))]["cadavers"] = []
 	
 	rmplh.post_init(rrm_node, player_rotation)
 
-func cadaver_collected(body):
+func cadaver_collected(body, ncadaver: Node3D):
 	if body.has_method("is_player"):
 		player_data["player_fossils"] += 1
 		player.load_data(player_data)
 		print(player_data["player_fossils"])
+		ncadaver.queue_free()
 
 func change_to_future(body):
 	if body.has_method("is_player"):
