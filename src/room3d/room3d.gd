@@ -16,6 +16,8 @@ var yellow_crystal = load("res://assets/misc/crystal_yellow.png")
 var gray_crystal = load("res://assets/misc/crystal_gray.png")
 var blue_crystal = load("res://assets/misc/crystal_blue.png")
 
+var future = load("res://assets/misc/future.png")
+
 var dog_scene = load("res://src/dog_enemy/dog_enemy.tscn")
 
 var cadaver_scene: PackedScene = load("res://src/ground_object/cadaver.tscn")
@@ -45,6 +47,8 @@ var dv: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO
 
 func _init(p_room: Room, directions: Array[String], has_crystal: CrystalE = CrystalE.NONE) -> void:
 	room = p_room
+	if room.is_boss:
+		has_crystal = CrystalE.NONE
 	directions_g = directions.duplicate(true)
 	for i in range(Room.ROOM_SIZE):
 		for j in range(Room.ROOM_SIZE):
@@ -150,6 +154,12 @@ func _init(p_room: Room, directions: Array[String], has_crystal: CrystalE = Crys
 			crystal._init_instance(0.5, gray_crystal, .2)
 			crystal.position = Vector3(Room.ROOM_SIZE/2, 2.5, Room.ROOM_SIZE/2)
 			add_child(crystal)
+		
+	if room.is_boss:
+		var future_instance = ground_object_scene.instantiate()
+		future_instance._init_instance(0.5, future, .2)
+		future_instance.position = Vector3(Room.ROOM_SIZE/2, 1.5, Room.ROOM_SIZE/2)
+		add_child(future_instance)
 
 var mobs_to_spawn: int
 func spawn_mob(idk, ground_object: Area3D):
